@@ -1,8 +1,5 @@
 # pocket-arcade
-
-
-
-
+Welcome to the Pocket Arcade project!
 
 # Parts
 
