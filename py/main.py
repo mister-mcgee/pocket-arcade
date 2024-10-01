@@ -1,10 +1,10 @@
 import board
+
 from busio     import SPI
 from digitalio import DigitalInOut
-from analogio  import AnalogIn
 from lib.adafruit_rgb_display import st7735, color565
 
-from py.arcade import Arcade
+# from arcade import Arcade
 
 spi = SPI(clock=board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 display = st7735.ST7735R(spi, 
@@ -20,7 +20,7 @@ display = st7735.ST7735R(spi,
 
 display.init()
 
-print(Arcade.VERSION)
+# print(Arcade.VERSION)
 
 cells = [0] * 16
 
