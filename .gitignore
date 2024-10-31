@@ -1,6 +1,7 @@
 .Trash-1000
 .fseventsd
 .metadata_never_index
+.venv
 boot_out.txt
 settings.toml
 System\ Volume\ Information
