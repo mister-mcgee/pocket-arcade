@@ -9,7 +9,7 @@ from arcade.canvas import Canvas
 class Stage:
   def __init__(self,
     dbg = False,
-    fps =    20,
+    fps =    24,
   ):
     self.debug  = dbg
     self.screen = Screen(self)

@@ -10,17 +10,12 @@ def clip(
   x0, y0, x1, y1,
   x2, y2, x3, y3
 ):
-  a0, b0 = ab(x0, x1)
-  a1, b1 = ab(y0, y1)
-  x0, x1 = ab(x2, x3)
-  y0, y1 = ab(y2, y3)
-
-  x0 = int(clamp(x0, a0, b0))
-  x1 = int(clamp(x1, a0, b0))
-  y0 = int(clamp(y0, a1, b1))
-  y1 = int(clamp(y1, a1, b1))
-
-  return x0, y0, x1, y1  
+  return (
+    int(clamp(x2, x0, x1)),
+    int(clamp(y2, y0, y1)),
+    int(clamp(x3, x0, x1)),
+    int(clamp(y3, y0, y1))
+  )
 
 class Canvas:
   def __init__(self, w=0, h=0):
@@ -37,8 +32,9 @@ class Canvas:
     y0, y1 = ab(y , y + h)
     x0, y0, x1, y1 = clip(0, 0, self.w, self.h, x0, y0, x1, y1)
 
-    # populate buffer
-    self.buffer[y0:y1, x0:x1] = c
+    if x0 != x1 and y0 != y1:
+      # populate buffer
+      self.buffer[y0:y1, x0:x1] = c
 
   def hline(self, x, y, w, c):
     self.rect(x, y, w, 1, c)

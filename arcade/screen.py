@@ -20,6 +20,7 @@ class Screen(Canvas):
     configure_pin_miso = board.MISO,
     configure_pin_mosi = board.MOSI,
     configure_pin_lite = board.D13 ,
+    configure_brightness = .5
   ):    
     super().__init__(
       configure_w + 1,
@@ -44,6 +45,15 @@ class Screen(Canvas):
       dc       = digitalio.DigitalInOut(configure_pin_dc),
       rst      = digitalio.DigitalInOut(configure_pin_rs),
     )
+
+    self.backlight = pwmio.PWMOut(configure_pin_lite, frequency=1000, duty_cycle=int(configure_brightness * 65535))
+
+
+  def set_brightness(self, brightness):
+    self.backlight.duty_cycle = int(brightness * 65535)
+
+  def get_brightness(self):
+    return self.backlight.duty_cycle / 65535
 
   def blit(self):
     self.device._block(0, 0, 

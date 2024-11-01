@@ -1,14 +1,14 @@
 from arcade import Scene, Input, Image, BLACK, WHITE
 
-hold_b = Image("/arcade/games/demo/hold_b.png")
-l_up   = Image("/arcade/games/demo/l_up.png")
-l_dn   = Image("/arcade/games/demo/l_dn.png")
-r_up   = Image("/arcade/games/demo/r_up.png")
-r_dn   = Image("/arcade/games/demo/r_dn.png")
-a_up   = Image("/arcade/games/demo/a_up.png")
-a_dn   = Image("/arcade/games/demo/a_dn.png")
-b_up   = Image("/arcade/games/demo/b_up.png")
-b_dn   = Image("/arcade/games/demo/b_dn.png")
+hold_b = Image("/arcade/games/demo/hold_b.bmp")
+l_up   = Image("/arcade/games/demo/l_up.bmp")
+l_dn   = Image("/arcade/games/demo/l_dn.bmp")
+r_up   = Image("/arcade/games/demo/r_up.bmp")
+r_dn   = Image("/arcade/games/demo/r_dn.bmp")
+a_up   = Image("/arcade/games/demo/a_up.bmp")
+a_dn   = Image("/arcade/games/demo/a_dn.bmp")
+b_up   = Image("/arcade/games/demo/b_up.bmp")
+b_dn   = Image("/arcade/games/demo/b_dn.bmp")
 
 class Demo(Scene):
   def __init__(self):
@@ -25,7 +25,6 @@ class Demo(Scene):
       self.hold_b  = 0
 
   def on_render(self, c):
-    pass
     c.rect(0, 126,         128, 2, BLACK)
     c.rect(0, 126, self.hold_b, 2, WHITE)
 
