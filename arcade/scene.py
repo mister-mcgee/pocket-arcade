@@ -39,20 +39,20 @@ class UpdateContext:
 
 
 class Scene:
-  def on_attach (self, stage  ):
+  def on_attach (self, stage):
     pass
 
-  def on_detach (self, stage  ):
+  def on_detach (self, stage):
     pass
 
-  def on_update(self, context):
+  def on_update(self, c):
     pass
 
-  def on_render(self, context):
+  def on_render(self, c):
     pass
 
-  def on_button_up  (self, input, id):
+  def on_button_up  (self, button, input=None):
     pass
 
-  def on_button_down(self, input, id):
+  def on_button_down(self, button, input=None):
     pass

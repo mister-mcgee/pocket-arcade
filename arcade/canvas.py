@@ -24,19 +24,20 @@ def clip(
 
 class Canvas:
   def __init__(self, w=0, h=0):
-    self.w    = w
-    self.h    = h
+    self.w = w
+    self.h = h
     self.buffer = np.zeros((h, w), dtype=np.uint16)
 
   def fill(self, c):
     self.buffer[::] = c
 
   def rect(self, x, y, w, h, c):
+    # clip rectangle
     x0, x1 = ab(x , x + w)
     y0, y1 = ab(y , y + h)
-
     x0, x1, y0, y1 = clip(0, 0, self.w, self.h, x0, y0, x1, y1)
 
+    # populate buffer
     self.buffer[y0:y1, x0:x1] = c
 
   def hline(self, x, y, w, c):
@@ -49,14 +50,16 @@ class Canvas:
     sw = sw if sw != None else i.w
     sh = sh if sh != None else i.h
 
+    # clip dst rectangle
     dx0, dx1 = ab(x, x + sw)
     dy0, dy1 = ab(y, y + sh)
     dx0, dy0, dx1, dy1 = clip(0, 0, self.w, self.h, dx0, dy0, dx1, dy1)
 
+    # clip src rectangle
     sw = dx1 - dx0
     sh = dy1 - dy0
-
     sx0, sx1 = ab(sx, sx + sw)
     sy0, sy1 = ab(sy, sy + sh)
 
+    # populate buffer
     self.buffer[dy0:dy1, dx0:dx1] = i.buffer[sy0:sy1, sx0:sx1]

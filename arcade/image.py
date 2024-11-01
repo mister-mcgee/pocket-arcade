@@ -1,4 +1,3 @@
-import gc
 import adafruit_imageload
 from arcade.canvas import Canvas
 
@@ -12,7 +11,3 @@ class Image(Canvas):
         self.buffer[y, x] = raw[x, y]
 
     self.buffer.byteswap(inplace=True)
-    gc.collect()
-
-
-    
