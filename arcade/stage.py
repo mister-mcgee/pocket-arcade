@@ -8,10 +8,10 @@ from arcade.canvas import Canvas
 
 class Stage:
   def __init__(self,
-    configure_dbg = False,
-    configure_fps =    20,
+    dbg = False,
+    fps =    20,
   ):
-    self.debug = configure_dbg
+    self.debug  = dbg
     self.screen = Screen(self)
     self.input  = Input (self)
 
@@ -36,10 +36,10 @@ class Stage:
     # timing
     self.t        = 0
     self.dt       = 0
-    self.fixed_dt = 1 / configure_fps
+    self.fixed_dt = 1 / fps
 
-    self.t_ms_per_frame = 1e3  / configure_fps
-    self.t_ns_per_frame = 1e9 // configure_fps
+    self.t_ms_per_frame = 1e3  / fps
+    self.t_ns_per_frame = 1e9 // fps
     self.t_ns_per_reset = 1e9
 
     self.t_now   = 0

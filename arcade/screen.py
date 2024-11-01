@@ -20,12 +20,14 @@ class Screen(Canvas):
     configure_pin_miso = board.MISO,
     configure_pin_mosi = board.MOSI,
     configure_pin_lite = board.D13 ,
-  ):
-    self.stage = stage
+  ):    
     super().__init__(
       configure_w + 1,
       configure_h    
     )
+    self.stage = stage
+    self.w = configure_w
+    self.h = configure_h
 
     self.device = st7735.ST7735R(
       busio.SPI(

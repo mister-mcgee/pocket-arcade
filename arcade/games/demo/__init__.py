@@ -15,8 +15,8 @@ class Demo(Scene):
     self.hold_b = 0
 
   def on_attach(self, stage):
-    stage.canvas.fill (BLACK)
-    stage.canvas.image(hold_b, 16, 4)
+    stage.screen.fill (BLACK)
+    stage.screen.image(hold_b, 16, 4)
 
   def on_update(self, c):
     if c.input.is_button_down(Input.BUTTON_B):
@@ -25,6 +25,7 @@ class Demo(Scene):
       self.hold_b  = 0
 
   def on_render(self, c):
+    pass
     c.rect(0, 126,         128, 2, BLACK)
     c.rect(0, 126, self.hold_b, 2, WHITE)
 

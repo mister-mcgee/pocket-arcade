@@ -35,7 +35,7 @@ class Canvas:
     # clip rectangle
     x0, x1 = ab(x , x + w)
     y0, y1 = ab(y , y + h)
-    x0, x1, y0, y1 = clip(0, 0, self.w, self.h, x0, y0, x1, y1)
+    x0, y0, x1, y1 = clip(0, 0, self.w, self.h, x0, y0, x1, y1)
 
     # populate buffer
     self.buffer[y0:y1, x0:x1] = c
