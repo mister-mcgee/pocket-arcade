@@ -13,7 +13,6 @@ from arcade.scene  import UpdateContext, RenderContext
 from arcade.input  import Input
 from arcade.canvas import Canvas
 
-
 class Stage:
   def __init__(self,
     dbg   = False,
@@ -24,7 +23,7 @@ class Stage:
     h     = 128,
     cs    = board.D10 ,
     rs    = board.D11 ,
-    dc    = board.D12 ,    
+    dc    = board.D12 ,
     sck   = board.SCK ,
     miso  = board.MISO,
     mosi  = board.MOSI,

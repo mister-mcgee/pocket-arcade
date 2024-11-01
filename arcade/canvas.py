@@ -1,7 +1,26 @@
-from arcade.color import color, rgb
-from arcade.math  import clamp, ab
-
 import ulab.numpy as np
+
+def ab(a, b):
+  return (a, b) if a <= b else (b, a)
+
+def clamp(x, a, b):
+  return max(a, min(b, x))
+
+def clip(
+  x0, y0, x1, y1,
+  x2, y2, x3, y3
+):
+  a0, b0 = ab(x0, x1)
+  a1, b1 = ab(y0, y1)
+  x0, x1 = ab(x2, x3)
+  y0, y1 = ab(y2, y3)
+
+  x0 = int(clamp(x0, a0, b0))
+  x1 = int(clamp(x1, a0, b0))
+  y0 = int(clamp(y0, a1, b1))
+  y1 = int(clamp(y1, a1, b1))
+
+  return x0, y0, x1, y1  
 
 class Canvas:
   def __init__(self, w=0, h=0):
@@ -9,22 +28,15 @@ class Canvas:
     self.h    = h
     self.buffer = np.zeros((h, w), dtype=np.uint16)
 
-  def _clamp_x(self, x):
-    return int(clamp(x, 0, self.w))
-  
-  def _clamp_y(self, y):
-    return int(clamp(y, 0, self.h))
-
   def fill(self, c):
     self.buffer[::] = c
 
   def rect(self, x, y, w, h, c):
     x0, x1 = ab(x , x + w)
     y0, y1 = ab(y , y + h)
-    x0 = self._clamp_x(x0)
-    x1 = self._clamp_x(x1)
-    y0 = self._clamp_y(y0)
-    y1 = self._clamp_y(y1)
+
+    x0, x1, y0, y1 = clip(0, 0, self.w, self.h, x0, y0, x1, y1)
+
     self.buffer[y0:y1, x0:x1] = c
 
   def hline(self, x, y, w, c):
@@ -33,10 +45,18 @@ class Canvas:
   def vline(self, x, y, h, c):
     self.rect(x, y, 1, h, c)
 
-  def circle(self, x, y, r, c):
-    pass
-
   def image(self, i, x=0, y=0, sx=0, sy=0, sw=None, sh=None):
-    w = sw or i.w
-    h = sh or i.h
-    self.buffer[y:y+h, x:x+w] = i.buffer[sy:sy+h, sx:sx+w]
+    sw = sw if sw != None else i.w
+    sh = sh if sh != None else i.h
+
+    dx0, dx1 = ab(x, x + sw)
+    dy0, dy1 = ab(y, y + sh)
+    dx0, dy0, dx1, dy1 = clip(0, 0, self.w, self.h, dx0, dy0, dx1, dy1)
+
+    sw = dx1 - dx0
+    sh = dy1 - dy0
+
+    sx0, sx1 = ab(sx, sx + sw)
+    sy0, sy1 = ab(sy, sy + sh)
+
+    self.buffer[dy0:dy1, dx0:dx1] = i.buffer[sy0:sy1, sx0:sx1]
