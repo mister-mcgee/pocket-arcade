@@ -2,7 +2,6 @@
 Welcome to the Pocket Arcade project!
 
 # Parts
-
 | Part # | Description |
 |--------|-------------|
 | [3800](https://www.adafruit.com/product/3800) | Adafruit ItsyBitsy M4 Express featuring ATSAMD51 |
