@@ -1,4 +1,4 @@
-from arcade import Scene, Input, Image, BLACK, WHITE, RED
+from arcade import Scene, Input, Image, BLACK, WHITE
 
 hold_b = Image("/arcade/games/demo/hold_b.png")
 l_up   = Image("/arcade/games/demo/l_up.png")
@@ -20,9 +20,9 @@ class Demo(Scene):
 
   def on_update(self, c):
     if c.input.is_button_down(Input.BUTTON_B):
-      self.hold_b  += 4
+      self.hold_b += 4
     else:
-      self.hold_b = 0
+      self.hold_b  = 0
 
   def on_render(self, c):
     c.rect(0, 126,         128, 2, BLACK)

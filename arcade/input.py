@@ -54,5 +54,3 @@ class Input:
       if self.stage.scene != None:
         if value: self.stage.scene.on_button_down(button, self)
         else    : self.stage.scene.on_button_up  (button, self)
-
-
