@@ -1,16 +1,21 @@
-from arcade import Scene, Input, Image, BLACK, WHITE
+import gc
 
-hold_b = Image("/arcade/games/demo/hold_b.bmp")
-l_up   = Image("/arcade/games/demo/l_up.bmp")
-l_dn   = Image("/arcade/games/demo/l_dn.bmp")
-r_up   = Image("/arcade/games/demo/r_up.bmp")
-r_dn   = Image("/arcade/games/demo/r_dn.bmp")
-a_up   = Image("/arcade/games/demo/a_up.bmp")
-a_dn   = Image("/arcade/games/demo/a_dn.bmp")
-b_up   = Image("/arcade/games/demo/b_up.bmp")
-b_dn   = Image("/arcade/games/demo/b_dn.bmp")
+from arcade.scene import Scene
+from arcade.input import Input
+from arcade.image import Image
+from arcade.color import BLACK, WHITE
 
-class Demo(Scene):
+hold_b = Image("/arcade/games/debug/hold_b.bmp")
+l_up   = Image("/arcade/games/debug/l_up.bmp")
+l_dn   = Image("/arcade/games/debug/l_dn.bmp")
+r_up   = Image("/arcade/games/debug/r_up.bmp")
+r_dn   = Image("/arcade/games/debug/r_dn.bmp")
+a_up   = Image("/arcade/games/debug/a_up.bmp")
+a_dn   = Image("/arcade/games/debug/a_dn.bmp")
+b_up   = Image("/arcade/games/debug/b_up.bmp")
+b_dn   = Image("/arcade/games/debug/b_dn.bmp")
+
+class Debug(Scene):
   def __init__(self):
     self.hold_b = 0
 
@@ -47,3 +52,5 @@ class Demo(Scene):
       c.image(b_dn, 98, 40)
     else:
       c.image(b_up, 98, 40)
+
+    gc.collect()

@@ -3,9 +3,9 @@ import adafruit_imageload
 from arcade.canvas import Canvas
 
 class Image(Canvas):
-  def __init__(self, where):
+  def __init__(self, path):
     gc.collect()
-    raw, _ = adafruit_imageload.load(where)
+    raw , _ = adafruit_imageload.load(path)
     super().__init__(raw.width, raw.height)
     
     for y in range(raw.height):

@@ -25,6 +25,9 @@ class RenderContext:
   def image(self, i, x=0, y=0, sx=0, sy=0, sw=None, sh=None):
     self.screen.image(i, x, y, sx, sy, sw, sh)
 
+  def text(self, font, text, x=0, y=0):
+    self.screen.text(font, text, x, y)
+
 class UpdateContext:
   def __init__(self, stage):
     self.stage    = stage

@@ -59,3 +59,6 @@ class Canvas:
 
     # populate buffer
     self.buffer[dy0:dy1, dx0:dx1] = i.buffer[sy0:sy1, sx0:sx1]
+
+  def text(self, font, text, x=0, y=0):
+    font.draw_text(self, text, x, y)

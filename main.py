@@ -1,7 +1,8 @@
-from arcade import Stage
-from arcade.games.demo  import Demo
+from arcade.stage import Stage
+
 from arcade.games.snake import Snake
+from arcade.games.debug import Debug
 
 stage = Stage(dbg=True)
-stage.use(Snake())
-stage.run(       )
+stage.use(Debug())
+stage.run()
