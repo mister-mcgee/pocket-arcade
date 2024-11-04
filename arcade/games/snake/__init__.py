@@ -23,7 +23,7 @@ class Snake(Scene):
 
     self.apple_sprite     = Image("/arcade/games/snake/apple.bmp")
     self.snake_sprite     = Image("/arcade/games/snake/snake.bmp")
-    self.game_over_sprite = Image("/arcade/games/snake/game_over.bmp")
+    # self.game_over_sprite = Image("/arcade/games/snake/game_over.bmp")
     self.setup()
 
   def setup(self):
@@ -176,8 +176,8 @@ class Snake(Scene):
 
       # check for game over
       if self.grid_at(self.adjacent(self.head, self.next)) > 0:
-        c.image(self.game_over_sprite, 32, 60)
-        c.text(WHITE_ON_BLACK, f"Score: {self.size}", 32, 68)
+        c.text(WHITE_ON_BLACK, "Game Over"         , 37, 60)
+        c.text(WHITE_ON_BLACK, f"Score {self.size}", 37, 68)
         self.game_over = True
         return
       
