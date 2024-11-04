@@ -4,7 +4,6 @@ import time
 from arcade.scene  import UpdateContext, RenderContext
 from arcade.input  import Input
 from arcade.screen import Screen
-from arcade.canvas import Canvas
 
 class Stage:
   def __init__(self,
@@ -57,22 +56,24 @@ class Stage:
     self.rcontext = RenderContext(self)
     self.scene    = None
 
-  def _used_kb(self):
+  def used_kb(self):
     return self.m_used / 1000
   
-  def _free_kb(self):
+  def free_kb(self):
     return self.m_free / 1000
   
-  def _total_kb(self):
+  def total_kb(self):
     return (self.m_used + self.m_free) / 1000
 
-  def use(self, scene):
+  def play(self, scene):
     if self.scene:
       self.scene.on_detach(self)
+    gc.collect()
     self.scene = scene
+    gc.collect()
     if self.scene:
       self.scene.on_attach(self)
-    self.run()
+    
 
   def update(self, t, dt, fixed_dt):
     self.input.poll()
@@ -89,7 +90,7 @@ class Stage:
       self.rcontext.fixed_dt = fixed_dt
       self.scene.on_render(self.rcontext)
 
-  def run(self):
+  def loop(self):
     self.t_start = time.monotonic_ns()
     self.t_frame = time.monotonic_ns()
     self.t_reset = time.monotonic_ns()
@@ -143,7 +144,7 @@ class Stage:
           print(f"UPDATE: {self.m_update_ms:>13.2f} ms")
           print(f"RENDER: {self.m_render_ms:>13.2f} ms")
           print(f"SCREEN: {self.m_screen_ms:>13.2f} ms")
-          print(f"MEMORY: {self._used_kb():.2f} of {self._total_kb():.2f} kb {100 * self._used_kb() // self._total_kb():.2f}%")
+          print(f"MEMORY: {self.used_kb():.2f} of {self.total_kb():.2f} kb {100 * self.used_kb() // self.total_kb():.2f}%")
 
 
 
