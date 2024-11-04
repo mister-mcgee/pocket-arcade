@@ -1,6 +1,7 @@
 import gc
 import time
 
+from arcade.font import WHITE_ON_BLACK
 from arcade.scene  import UpdateContext, RenderContext
 from arcade.input  import Input
 from arcade.screen import Screen
@@ -68,12 +69,11 @@ class Stage:
   def play(self, scene):
     if self.scene:
       self.scene.on_detach(self)
-    gc.collect()
+
     self.scene = scene
-    gc.collect()
+
     if self.scene:
-      self.scene.on_attach(self)
-    
+      self.scene.on_attach(self)    
 
   def update(self, t, dt, fixed_dt):
     self.input.poll()
@@ -127,7 +127,7 @@ class Stage:
         self.m_render_ms = self.m_render_accumulator / self.m_fps_accumulator
         self.m_screen_ms = self.m_screen_accumulator / self.m_fps_accumulator
 
-        self.m_fps_accumulator       = 0
+        self.m_fps_accumulator    = 0
         self.m_frame_accumulator  = 0
         self.m_update_accumulator = 0
         self.m_render_accumulator = 0

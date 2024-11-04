@@ -21,8 +21,8 @@ class Snake(Scene):
       ( 1, 0),
     ]
 
-    self.apple_sprite     = Image("/arcade/games/snake/apple.bmp")
-    self.snake_sprite     = Image("/arcade/games/snake/snake.bmp")
+    self.apple_sprite     = Image.load("/arcade/games/snake/apple.bmp")
+    self.snake_sprite     = Image.load("/arcade/games/snake/snake.bmp")
     # self.game_over_sprite = Image("/arcade/games/snake/game_over.bmp")
     self.setup()
 

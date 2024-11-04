@@ -99,4 +99,11 @@ class Canvas:
     ]
 
   def text(self, font, text, x=0, y=0):
-    font.draw_text(self, text, x, y)
+    for c in text:
+      self.image(
+        font.atlas, x, y, 
+        ((ord(c) - 32)  % font.cols) * font.col_w, 
+        ((ord(c) - 32) // font.cols) * font.row_h, 
+        font.col_w, font.row_h
+      )
+      x += font.col_w
