@@ -1,7 +1,6 @@
 import gc
 import time
 
-from arcade.font import WHITE_ON_BLACK
 from arcade.scene  import UpdateContext, RenderContext
 from arcade.input  import Input
 from arcade.screen import Screen
