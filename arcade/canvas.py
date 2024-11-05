@@ -10,6 +10,10 @@ def clip(
   x0, y0, x1, y1,
   x2, y2, x3, y3
 ):
+  x0, x1 = ab(x0, x1)
+  y0, y1 = ab(y0, y1)
+  x2, x3 = ab(x2, x3)
+  y2, y3 = ab(y2, y3)
   return (
     int(clamp(x2, x0, x1)),
     int(clamp(y2, y0, y1)),
@@ -34,16 +38,13 @@ class Canvas:
 
   def rect(self, x, y, w, h, c):
     # clip rectangle
-    x0, x1 = ab(x , x + w)
-    y0, y1 = ab(y , y + h)
-    x0, y0, x1, y1 = clip(0, 0, self.w, self.h, x0, y0, x1, y1)
+    x0, y0, x1, y1 = clip(0, 0, self.w, self.h, x, y, x + w, y + h)
 
-    if (x0 != x1 and y0 != y1):
-      # populate buffer
-      self.buffer[
-        y0:y1,
-        x0:x1
-      ] = c
+    if (x0 == x1 and y0 == y1):
+      return
+
+    # populate buffer
+    self.buffer[y0:y1, x0:x1] = c
 
   def hline(self, x, y, w, c):
     self.rect(x, y, w, 1, c)
@@ -56,19 +57,26 @@ class Canvas:
     sh = sh or i.h
 
     # clip dst rectangle
-    x0, x1 = ab(x, x + sw)
-    y0, y1 = ab(y, y + sh)
-    x2, y2, x3, y3 = clip(0, 0, self.w, self.h, x0, y0, x1, y1)
+    x0, y0, x1, y1 = clip(0, 0, self.w, self.h, x, y, x + sw, y + sh)
 
-    sx = x2 - x0
-    sy = y2 - y0
-    sw = x3 - x2
-    sh = y3 - y2
+    dx = x0 - x
+    dy = y0 - y
+    dw = (x1 - x0) - sw
+    dh = (y1 - y0) - sh
     
     # clip src rectangle
-    x2, x3 = ab(sx, sx + sw)
-    y2, y3 = ab(sy, sy + sh)
-    x2, y2, x3, y3 = clip(0, 0, i.w, i.h, x2, y2, x3, y3)
+    x2, y2, x3, y3 = clip(0, 0, i.w, i.h, 
+      sx + dx, 
+      sy + dy,
+      sx + dx + sw + dw,
+      sy + dy + sh + dh
+    )
+
+    x1 = x0 + x3 - x2
+    y1 = y0 + y3 - y2
+
+    if (x0 == x1 or y0 == y1):
+      return
 
     # populate buffer
     self.buffer[y0: y1, x0: x1] = i.buffer[y2: y3, x2: x3]

@@ -19,11 +19,12 @@ class Flappy(Scene):
 
   def __init__(self):
     self.flappy_sprite = Image.load("/arcade/games/flappy/flappy.bmp")
+    self.gap = 32
 
   def on_attach(self, stage):
     self.pipes = [
-      Pipe(100, random.randint(30, 98)),
-      Pipe(200, random.randint(30, 98)),
+      Pipe(100, random.randint(32 + self.gap//2, 96 - self.gap//2)),
+      Pipe(200, random.randint(32 + self.gap//2, 96 - self.gap//2)),
     ]
     self.frame = 0
     self.speed = 1
@@ -35,14 +36,14 @@ class Flappy(Scene):
 
     if pipe.x < -32:
       pipe.x += 200
-      pipe.y = random.randint(30, 98)
+      pipe.y = random.randint(32 + self.gap//2, 96 - self.gap//2)
 
   def erase_pipe(self, c, pipe):
     c.rect(pipe.x - 16, 0, 32, 128, BLACK)
 
   def draw_pipe (self, c, pipe):
-    c.image(self.flappy_sprite, pipe.x - 16, pipe.y - 48 - 25, 0, 64, 32, 48)
-    c.image(self.flappy_sprite, pipe.x - 16, pipe.y      + 25, 0,  0, 32, 48)
+    c.image(self.flappy_sprite, pipe.x - 16, pipe.y - 64 - self.gap//2, 0, 48, 32, 64)
+    c.image(self.flappy_sprite, pipe.x - 16, pipe.y      + self.gap//2, 0,  0, 32, 64)
 
   def on_update(self, c):
     pass
