@@ -1,6 +1,7 @@
 import gc
 import time
 
+from arcade.font import WHITE_ON_BLACK
 from arcade.scene  import UpdateContext, RenderContext
 from arcade.input  import Input
 from arcade.screen import Screen
@@ -64,12 +65,22 @@ class Stage:
   
   def total_kb(self):
     return (self.m_used + self.m_free) / 1000
+  
+
 
   def play(self, scene):
     if self.scene:
       self.scene.on_detach(self)
 
-    self.scene = scene
+    self.scene =    None
+    gc.collect()
+
+    self.screen.fill(0)
+    self.screen.text(WHITE_ON_BLACK, "Loading...", 34, 60)
+    self.screen.blit( )
+    self.input .poll( )
+    
+    self.scene = scene()
 
     if self.scene:
       self.scene.on_attach(self)    
@@ -144,8 +155,3 @@ class Stage:
           print(f"RENDER: {self.m_render_ms:>13.2f} ms")
           print(f"SCREEN: {self.m_screen_ms:>13.2f} ms")
           print(f"MEMORY: {self.used_kb():.2f} of {self.total_kb():.2f} kb {100 * self.used_kb() // self.total_kb():.2f}%")
-
-
-
-
-

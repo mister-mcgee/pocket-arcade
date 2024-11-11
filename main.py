@@ -4,11 +4,12 @@ from arcade.stage import Stage
 
 # from arcade.games.chess import Chess
 # from arcade.games.debug import Debug
-# from arcade.games.snake import Snake
-from arcade.games.flappy import Flappy
+from arcade.games.snake import Snake
+# from arcade.games.flappy import Flappy
+from arcade.games.home import Home
 
-stage = Stage(dbg=True)
+stage = Stage(dbg=False)
 
 stage.screen.set_brightness(.25)
-stage.play(Flappy())
+stage.play(Home)
 stage.loop()
