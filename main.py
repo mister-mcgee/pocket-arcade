@@ -10,6 +10,5 @@ from arcade.games.home import Home
 
 stage = Stage(dbg=False)
 
-stage.screen.set_brightness(.25)
 stage.play(Home)
 stage.loop()

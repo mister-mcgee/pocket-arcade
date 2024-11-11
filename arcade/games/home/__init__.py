@@ -4,10 +4,11 @@ from arcade.scene import Scene
 from arcade.color import WHITE , BLACK
 from arcade.font  import WHITE_ON_BLACK, BLACK_ON_WHITE
 
-from arcade.games.settings  import Settings
-from arcade.games.snake     import Snake
-from arcade.games.chess     import Chess
-from arcade.games.lights    import Lights
+from arcade.games.settings import Settings
+
+from arcade.games.snake  import Snake
+from arcade.games.chess  import Chess
+from arcade.games.lights import Lights
 
 class Home(Scene):
   def __init__(self):
@@ -36,7 +37,7 @@ class Home(Scene):
     self.repaint(stage.screen)
 
   def on_button_down(self, button, input):
-    if button == input.BUTTON_L:
+    if   button == input.BUTTON_L:
       self.selected = (self.selected + len(self.games) - 1) % len(self.games)
       self.repaint(input.stage.screen)
     elif button == input.BUTTON_R:

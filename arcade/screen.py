@@ -48,9 +48,8 @@ class Screen(Canvas):
 
     self.backlight = pwmio.PWMOut(configure_pin_lite, frequency=1000, duty_cycle=int(configure_brightness * 65535))
 
-
   def set_brightness(self, brightness):
-    self.backlight.duty_cycle = int(brightness * 65535)
+    self.backlight.duty_cycle = round(brightness * 65535)
 
   def get_brightness(self):
     return self.backlight.duty_cycle / 65535

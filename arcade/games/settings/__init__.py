@@ -1,64 +1,45 @@
 from arcade.scene import Scene
-from arcade.input import Input
-from arcade.image import Image
-from arcade.color import WHITE,   BLACK
-from arcade.font  import WHITE_ON_BLACK
+from arcade.color import WHITE, BLACK
+from arcade.font  import WHITE_ON_BLACK, BLACK_ON_WHITE
+
+from arcade.games.settings.brightness import Brightness
+from arcade.games.settings.diagnostic import Diagnostic
 
 class Settings(Scene):
   def __init__(self):
-    self.brightness = False
+    self.options = [
+      ("Brightness", Brightness),
+      ("Diagnostic", Diagnostic),
+    ]
+    self.option  = -1
 
+  def repaint(self, c):
+    c.fill(0)
 
-    self.hold_b = 0
+    c.rect(0, 0, 128, 10, WHITE)
+    c.text(BLACK_ON_WHITE, "Settings", (128 - len("Settings") * 6) // 2, 1)
 
-    self.l_up_sprite   = Image.load("/arcade/games/settings/l_up.bmp")
-    self.l_dn_sprite   = Image.load("/arcade/games/settings/l_dn.bmp")
-    self.r_up_sprite   = Image.load("/arcade/games/settings/r_up.bmp")
-    self.r_dn_sprite   = Image.load("/arcade/games/settings/r_dn.bmp")
-    self.a_up_sprite   = Image.load("/arcade/games/settings/a_up.bmp")
-    self.a_dn_sprite   = Image.load("/arcade/games/settings/a_dn.bmp")
-    self.b_up_sprite   = Image.load("/arcade/games/settings/b_up.bmp")
-    self.b_dn_sprite   = Image.load("/arcade/games/settings/b_dn.bmp")
+    for i, (title, _) in enumerate(self.options):
+      if i == self.option:
+        c.hline(4, i * 10 + 20, len(title) * 6, WHITE)
+        c.text (WHITE_ON_BLACK, title, 5, i * 10 + 12)
+      else:
+        c.text (WHITE_ON_BLACK, title, 1, i * 10 + 12)
 
   def on_attach(self, stage):
-    stage.screen.fill (BLACK)
-    stage.screen.text(WHITE_ON_BLACK, "Hold B to Return", 16, 4)
+    self.repaint(stage.screen)
 
-  def on_update(self, c):
-    self.update_demo(c)
-
-  def on_render(self, c):
-    self.render_demo(c)
-
-  def update_demo(self, c):
-    if c.input.is_button_down(Input.BUTTON_B):
-      self.hold_b += 4
-    else:
-      self.hold_b  = 0
-    if self.hold_b > 128:
+  def on_button_down(self, button, input):
+    if   button == input.BUTTON_L:
+      self.option = (self.option + len(self.options) - 1) % len(self.options)
+      self.repaint(input.stage.screen)
+    elif button == input.BUTTON_R:
+      self.option = (self.option                     + 1) % len(self.options)
+      self.repaint(input.stage.screen)
+    elif button == input.BUTTON_A:
+      for i, (_, game) in enumerate(self.options):
+        if i == self.option:
+          input.stage.play(game)
+    elif button == input.BUTTON_B:
       from arcade.games.home import Home
-      c.stage.play(Home)   
-
-  def render_demo(self, c):
-    c.rect(0, 126,         128, 2, BLACK)
-    c.rect(0, 126, self.hold_b, 2, WHITE)
-
-    if c.input.is_button_down(Input.BUTTON_L):
-      c.image(self.l_dn_sprite, 4, 52)
-    else:
-      c.image(self.l_up_sprite, 4, 52)
-
-    if c.input.is_button_down(Input.BUTTON_R):
-      c.image(self.r_dn_sprite, 34, 52)
-    else:
-      c.image(self.r_up_sprite, 34, 52)
-
-    if c.input.is_button_down(Input.BUTTON_A):
-      c.image(self.a_dn_sprite, 78, 64)
-    else:
-      c.image(self.a_up_sprite, 78, 64)
-
-    if c.input.is_button_down(Input.BUTTON_B):
-      c.image(self.b_dn_sprite, 98, 40)
-    else:
-      c.image(self.b_up_sprite, 98, 40)
+      input.stage.play(Home)
