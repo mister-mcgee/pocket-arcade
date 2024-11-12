@@ -1,7 +1,7 @@
 from arcade.input import Input
 from arcade.scene import Scene
 from arcade.color import WHITE, BLACK
-from arcade.font  import WHITE_ON_BLACK
+from arcade.font  import BLACK_ON_WHITE, WHITE_ON_BLACK
 
 
 class Brightness(Scene):
@@ -19,6 +19,10 @@ class Brightness(Scene):
 
   def on_render(self, c):
     c.fill(0)
+
+    c.rect(0, 0, 128, 10, WHITE)
+    c.text(BLACK_ON_WHITE, "Brightness", 34, 1)
+
     string = f"{round(100 * c.stage.screen.get_brightness())}%"
     length =    round(118 * c.stage.screen.get_brightness())
 

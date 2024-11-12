@@ -66,17 +66,17 @@ class Stage:
   def total_kb(self):
     return (self.m_used + self.m_free) / 1000
 
-  def play(self, scene, loading_screen=None):
+  def play(self, scene, loading=False):
     if self.scene:
       self.scene.on_detach(self)
 
-    self.screen.fill(0)
-    self.screen.text(WHITE_ON_BLACK, "Loading...", 34, 60)
-    self.screen.blit( )
+    if loading:
+      self.screen.fill(0)
+      self.screen.text(WHITE_ON_BLACK, "Loading...", 34, 60)
+      self.screen.blit( )
 
     self.scene =    None
     gc.collect()
-    self.input.poll()
     self.scene = scene()
 
     if self.scene:

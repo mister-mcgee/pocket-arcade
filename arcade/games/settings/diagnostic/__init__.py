@@ -2,7 +2,7 @@ from arcade.scene import Scene
 from arcade.image import Image
 from arcade.input import Input
 from arcade.color import WHITE, BLACK
-from arcade.font  import WHITE_ON_BLACK
+from arcade.font  import BLACK_ON_WHITE, WHITE_ON_BLACK
 
 class Diagnostic(Scene):
   def __init__(self):
@@ -19,7 +19,9 @@ class Diagnostic(Scene):
 
   def on_attach(self, stage):
     stage.screen.fill(0)    
-    stage.screen.text(WHITE_ON_BLACK, "Hold B to Return", 16, 4)
+
+    stage.screen.rect(0, 0, 128, 10, WHITE)
+    stage.screen.text(BLACK_ON_WHITE, "Diagnostic", 34, 1)
 
   def on_update(self, c):
     if c.input.is_button_down(Input.BUTTON_B):

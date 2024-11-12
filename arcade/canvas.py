@@ -40,7 +40,7 @@ class Canvas:
     # clip rectangle
     x0, y0, x1, y1 = clip(0, 0, self.w, self.h, x, y, x + w, y + h)
 
-    if (x0 == x1 and y0 == y1):
+    if (x0 == x1 or y0 == y1):
       return
 
     # populate buffer

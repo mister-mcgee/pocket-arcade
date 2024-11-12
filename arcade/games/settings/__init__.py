@@ -37,9 +37,9 @@ class Settings(Scene):
       self.option = (self.option                     + 1) % len(self.options)
       self.repaint(input.stage.screen)
     elif button == input.BUTTON_A:
-      for i, (_, game) in enumerate(self.options):
+      for i, (_, module) in enumerate(self.options):
         if i == self.option:
-          input.stage.play(game)
+          input.stage.play(module, True)
     elif button == input.BUTTON_B:
       from arcade.games.home import Home
       input.stage.play(Home)
