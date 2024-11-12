@@ -1,11 +1,12 @@
-from arcade.font  import WHITE_ON_BLACK
-from arcade.input import Input
-from arcade.scene import Scene
-from arcade.image import Image
-from arcade.color import BLACK
-
 import random
 import ulab.numpy as np
+
+from arcade.scene import Scene
+from arcade.input import Input
+from arcade.image import Image
+
+from arcade.color import BLACK
+from arcade.fonts import WHITE_ON_BLACK
 
 class Snake(Scene):
   def __init__(self):
@@ -21,9 +22,8 @@ class Snake(Scene):
       ( 1, 0),
     ]
 
-    self.apple_sprite     = Image.load("/arcade/games/snake/apple.bmp")
-    self.snake_sprite     = Image.load("/arcade/games/snake/snake.bmp")
-    # self.game_over_sprite = Image("/arcade/games/snake/game_over.bmp")
+    self.apple_sprite     = Image.load("/arcade/apps/snake/apple.bmp")
+    self.snake_sprite     = Image.load("/arcade/apps/snake/snake.bmp")
     self.setup()
 
   def setup(self):
@@ -153,10 +153,10 @@ class Snake(Scene):
       elif last == self.SOUTH:
         screen.image(self.snake_sprite, i * 8, j * 8, 16, 32, 8, 8)
 
-  def on_button_down(self, button, input):
+  def on_button_down(self, c, button):
     if self.game_over:
       self.setup()
-      self.on_attach(input.stage)
+      self.on_attach(c.stage)
       return
     
     if   button == Input.BUTTON_L or button == Input.BUTTON_A:

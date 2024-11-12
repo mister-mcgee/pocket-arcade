@@ -1,8 +1,6 @@
-VERSION_MONIKER = "Pocket Arcade"
-VERSION_MAJOR   = 1
-VERSION_MINOR   = 0
-VERSION_PATCH   = 0
+from arcade.version import Version
 
-VERSION_STRING = f"{VERSION_MONIKER} {VERSION_MAJOR}.{VERSION_MINOR}.{VERSION_PATCH}"
+class Arcade:
+  VERSION = Version("Pocket Arcade", 0, 0, 1)
 
-print(VERSION_STRING)
+print(Arcade.VERSION)

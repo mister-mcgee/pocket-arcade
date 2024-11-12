@@ -8,45 +8,30 @@ import digitalio
 from adafruit_rgb_display import st7735
 
 class Screen(Canvas):
-  def __init__(self, stage,
-    configure_x_offset =   2,
-    configure_y_offset =   3,
-    configure_w        = 128,
-    configure_h        = 128,
-    configure_pin_cs   = board.D10 ,
-    configure_pin_rs   = board.D11 ,
-    configure_pin_dc   = board.D12 ,
-    configure_pin_sck  = board.SCK ,
-    configure_pin_miso = board.MISO,
-    configure_pin_mosi = board.MOSI,
-    configure_pin_lite = board.D13 ,
-    configure_brightness = .5
-  ):    
-    super().__init__(
-      configure_w + 1,
-      configure_h    
-    )
+  def __init__(self, stage): 
+    super().__init__(129, 128)
+
     self.stage = stage
-    self.w = configure_w
-    self.h = configure_h
+    self.w = 128
+    self.h = 128
 
-    self.device = st7735.ST7735R(
+    self.display = st7735.ST7735R(
       busio.SPI(
-        clock=configure_pin_sck ,
-        MOSI =configure_pin_mosi,
-        MISO =configure_pin_miso
+        clock=board.SCK ,
+        MOSI =board.MOSI,
+        MISO =board.MISO
       ), 
-      width    = configure_w, 
-      height   = configure_h, 
-      rotation = 0,
-      x_offset = configure_x_offset,
-      y_offset = configure_y_offset,
-      cs       = digitalio.DigitalInOut(configure_pin_cs),
-      dc       = digitalio.DigitalInOut(configure_pin_dc),
-      rst      = digitalio.DigitalInOut(configure_pin_rs),
+      width    = 128, 
+      height   = 128, 
+      rotation =   0,
+      x_offset =   2,
+      y_offset =   3,
+      cs       = digitalio.DigitalInOut(board.D10),
+      dc       = digitalio.DigitalInOut(board.D12),
+      rst      = digitalio.DigitalInOut(board.D11),
     )
 
-    self.backlight = pwmio.PWMOut(configure_pin_lite, frequency=1000, duty_cycle=int(configure_brightness * 65535))
+    self.backlight = pwmio.PWMOut(board.D13, frequency=1000, duty_cycle=int(.5 * 65535))
 
   def set_brightness(self, brightness):
     self.backlight.duty_cycle = round(brightness * 65535)
@@ -55,7 +40,7 @@ class Screen(Canvas):
     return self.backlight.duty_cycle / 65535
 
   def blit(self):
-    self.device._block(0, 0, 
+    self.display._block(0, 0,
       self.w,
       self.h,
       self.buffer

@@ -1,7 +1,7 @@
 from arcade.stage import Stage
 
-from arcade.games.home import Home
+from arcade.apps.system.dashboard import Dashboard
 
-stage = Stage(dbg=False)
-stage.play(Home)
+stage = Stage(debug=False)
+stage.play(Dashboard)
 stage.loop()

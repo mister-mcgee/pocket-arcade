@@ -1,19 +1,17 @@
 import gc
 import time
 
-from arcade.font import WHITE_ON_BLACK
-from arcade.scene  import UpdateContext, RenderContext
-from arcade.input  import Input
-from arcade.screen import Screen
+from arcade.input   import Input
+from arcade.screen  import Screen
+from arcade.context import Context
 
 class Stage:
-  def __init__(self,
-    dbg = False,
-    fps =    24,
-  ):
-    self.debug  = dbg
-    self.screen = Screen(self)
-    self.input  = Input (self)
+  def __init__(self, *, fps=24, debug=False):
+    self.debug = debug
+
+    self.input   = Input  (self)
+    self.screen  = Screen (self)
+    self.context = Context(self)
 
     # metrics
     self.m_fps       = 0
@@ -27,11 +25,8 @@ class Stage:
 
     self.m_frame_accumulator  = 0
     self.m_update_accumulator = 0
-    self.m_render_accumulator = 0
     self.m_screen_accumulator = 0
-
-    self.m_used = gc.mem_alloc()
-    self.m_free = gc.mem_free ()
+    self.m_render_accumulator = 0
 
     # timing
     self.t        = 0
@@ -53,49 +48,36 @@ class Stage:
     self.t_between_3 = 0
 
     # Scene
-    self.ucontext = UpdateContext(self)
-    self.rcontext = RenderContext(self)
-    self.scene    = None
+    self.scene = None
 
   def used_kb(self):
-    return self.m_used / 1000
+    return gc.mem_alloc() / 1000
   
   def free_kb(self):
-    return self.m_free / 1000
+    return gc.mem_free () / 1000
   
   def total_kb(self):
-    return (self.m_used + self.m_free) / 1000
+    return (gc.mem_alloc() + gc.mem_free()) / 1000
 
-  def play(self, scene, loading=False):
+  def play(self, scene):
     if self.scene:
       self.scene.on_detach(self)
-
-    if loading:
-      self.screen.fill(0)
-      self.screen.text(WHITE_ON_BLACK, "Loading...", 34, 60)
-      self.screen.blit( )
 
     self.scene =    None
     gc.collect()
     self.scene = scene()
 
     if self.scene:
-      self.scene.on_attach(self)    
+      self.scene.on_attach(self)
 
-  def update(self, t, dt, fixed_dt):
-    self.input.poll()
+  def update(self, c):
+    self.input.poll(c)
     if self.scene:
-      self.ucontext.       t =        t
-      self.ucontext.      dt =       dt
-      self.ucontext.fixed_dt = fixed_dt
-      self.scene.on_update(self.ucontext)
+      self.scene.on_update(c)
 
-  def render(self, t, dt, fixed_dt):
+  def render(self, c):
     if self.scene:
-      self.rcontext.       t =        t
-      self.rcontext.      dt =       dt
-      self.rcontext.fixed_dt = fixed_dt
-      self.scene.on_render(self.rcontext)
+      self.scene.on_render(c)
 
   def loop(self):
     self.t_start = time.monotonic_ns()
@@ -109,11 +91,15 @@ class Stage:
 
         self.t  = (self.t_now - self.t_start) / 1e9
         self.dt = (self.t_now - self.t_frame) / 1e9
+
+        self.context. t       = self. t
+        self.context.dt       = self.dt
+        self.context.fixed_dt = self.fixed_dt
         
         self.t_between_0 = time.monotonic_ns()
-        self.update(self.t, self.dt, self.fixed_dt)
+        self.update(self.context)
         self.t_between_1 = time.monotonic_ns()
-        self.render(self.t, self.dt, self.fixed_dt)
+        self.render(self.context)
         self.t_between_2 = time.monotonic_ns()
         self.screen.blit()
         self.t_between_3 = time.monotonic_ns()
@@ -143,12 +129,10 @@ class Stage:
         self.t_reset = self.t_now
 
         if self.debug:
-          self.m_used = gc.mem_alloc()
-          self.m_free = gc.mem_free ()
 
           print("*** DEBUG ***")
           print(f"FRAME : {self.m_fps} hz @ {self.m_frame_ms:.2f} of {self.t_ms_per_frame:.2f} ms")
           print(f"UPDATE: {self.m_update_ms:>13.2f} ms")
           print(f"RENDER: {self.m_render_ms:>13.2f} ms")
           print(f"SCREEN: {self.m_screen_ms:>13.2f} ms")
-          print(f"MEMORY: {self.used_kb():.2f} of {self.total_kb():.2f} kb {100 * self.used_kb() // self.total_kb():.2f}%")
+          print(f"MEMORY: {self.used_kb():.2f} of {self.total_kb():.2f} kb {100 * self.used_kb() / self.total_kb():.2f}%")

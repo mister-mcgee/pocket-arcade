@@ -22,16 +22,10 @@ def clip(
   )
 
 class Canvas:
-  def __init__(self, w=0, h=0, n=0):
+  def __init__(self, w=0, h=0):
     self.w = w
     self.h = h
     self.buffer = np.zeros((h, w), dtype=np.uint16)
-
-  def __getitem__(self, at):
-    return self.buffer[at]
-  
-  def __setitem__(self, at, c):
-    self.buffer[at] = c
 
   def fill(self, c):
     self.buffer[::] = c
@@ -81,12 +75,12 @@ class Canvas:
     # populate buffer
     self.buffer[y0: y1, x0: x1] = i.buffer[y2: y3, x2: x3]
 
-  def text(self, font, text, x=0, y=0):
+  def text(self, atlas, text, x=0, y=0):
     for c in text:
       self.image(
-        font.atlas, x, y, 
-        ((ord(c) - 32)  % font.cols) * font.col_w, 
-        ((ord(c) - 32) // font.cols) * font.row_h, 
-        font.col_w, font.row_h
+        atlas.image, x, y, 
+        ((ord(c) - 32)  % atlas.cols) * atlas.col_w, 
+        ((ord(c) - 32) // atlas.cols) * atlas.row_h, 
+        atlas.col_w, atlas.row_h
       )
-      x += font.col_w
+      x += atlas.col_w

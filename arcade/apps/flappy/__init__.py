@@ -1,5 +1,5 @@
 from arcade.color import BLACK, WHITE
-from arcade.font import WHITE_ON_BLACK
+from arcade.atlas import WHITE_ON_BLACK
 from arcade.image import Image
 from arcade.scene import Scene
 
