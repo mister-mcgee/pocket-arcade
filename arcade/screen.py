@@ -32,7 +32,7 @@ class Screen(Canvas):
 
     self.device = st7735.ST7735R(
       busio.SPI(
-        clock=configure_pin_sck , 
+        clock=configure_pin_sck ,
         MOSI =configure_pin_mosi,
         MISO =configure_pin_miso
       ), 
