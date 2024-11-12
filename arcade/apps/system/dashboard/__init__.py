@@ -7,6 +7,8 @@ from arcade.fonts import BLACK_ON_WHITE, WHITE_ON_BLACK
 
 from arcade.apps.chess import Chess
 from arcade.apps.snake import Snake
+from arcade.apps.flappy import Flappy
+from arcade.apps.lights import Lights
 from arcade.apps.system.loading import Loading
 
 class Dashboard(Scene):
@@ -14,8 +16,10 @@ class Dashboard(Scene):
     self.version = str(Arcade.VERSION)
 
     self.options = [
-      ("Chess", Loading(Chess)),
-      ("Snake", Loading(Snake)),
+      ("Chess" , Loading(Chess )),
+      ("Snake" , Loading(Snake )),
+      ("Lights", Loading(Lights)),
+      ("Flappy", Loading(Flappy)),
     ]
     self.option  = -1
 

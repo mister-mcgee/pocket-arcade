@@ -50,7 +50,8 @@ class Lights(Scene):
     j = random.randint(0, 4)
     self.toggle((i, j))
 
-  def draw_board (self, c):
+  def draw_board (self, c):    
+    c.fill(0)
     for i in range(5):
       for j in range(5):
         c.rect(
@@ -93,21 +94,21 @@ class Lights(Scene):
   def on_render(self, c):
     pass
 
-  def on_button_down(self, button, input):
+  def on_button_down(self, c, button):
     if button == Input.BUTTON_L:
       self.cursor = (
         (self.cursor[0]    ) ,
         (self.cursor[1] + 1) % 5
       )
-      self.redraw(input.stage.screen)
+      self.redraw(c)
     elif button == Input.BUTTON_R:
       self.cursor = (
         (self.cursor[0] + 1) % 5,
         (self.cursor[1]    ) 
       )
-      self.redraw(input.stage.screen)
+      self.redraw(c)
     elif button == Input.BUTTON_A or button == Input.BUTTON_B:
       self.toggle(self.cursor)
-      self.redraw(input.stage.screen)
+      self.redraw(c)
   
 
