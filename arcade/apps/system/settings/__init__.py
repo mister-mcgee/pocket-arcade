@@ -1,3 +1,4 @@
+from arcade       import Arcade
 from arcade.input import Input
 from arcade.scene import Scene
 
@@ -10,8 +11,9 @@ from arcade.apps.system.settings.diagnostic import Diagnostic
 
 class Settings(Scene):
   def __init__(self):
+    self.version = f"v{Arcade.VERSION.major}.{Arcade.VERSION.minor}.{Arcade.VERSION.patch}"
     self.options = [
-      ("Brightness", Brightness),
+      ("Brightness",         Brightness ),
       ("Diagnostic", Loading(Diagnostic)),
     ]
     self.option  = -1

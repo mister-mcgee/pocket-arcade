@@ -14,7 +14,6 @@ from arcade.apps.system.loading import Loading
 class Dashboard(Scene):
   def __init__(self):
     self.version = str(Arcade.VERSION)
-
     self.options = [
       ("Chess" , Loading(Chess )),
       ("Snake" , Loading(Snake )),

@@ -36,6 +36,9 @@ class Diagnostic(Scene):
     c.rect(0, 126,         128, 2, BLACK)
     c.rect(0, 126, self.hold_b, 2, WHITE)
 
+    c.rect(116, 0, 12, 10, WHITE)
+    c.text(BLACK_ON_WHITE, str(c.stage.m_fps), 116, 1)
+
     if c.is_button_down(Input.BUTTON_L):
       c.image(self.l_dn_sprite, 4, 52)
     else:

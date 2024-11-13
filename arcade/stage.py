@@ -33,8 +33,8 @@ class Stage:
     self.dt       = 0
     self.fixed_dt = 1 / fps
 
-    self.t_ms_per_frame = 1e3  / fps
-    self.t_ns_per_frame = 1e9 // fps
+    self.t_ms_per_frame = 1e3 / fps
+    self.t_ns_per_frame = 1e9 / fps
     self.t_ns_per_reset = 1e9
 
     self.t_now   = 0
@@ -129,10 +129,11 @@ class Stage:
         self.t_reset = self.t_now
 
         if self.debug:
-
           print("*** DEBUG ***")
           print(f"FRAME : {self.m_fps} hz @ {self.m_frame_ms:.2f} of {self.t_ms_per_frame:.2f} ms")
           print(f"UPDATE: {self.m_update_ms:>13.2f} ms")
           print(f"RENDER: {self.m_render_ms:>13.2f} ms")
           print(f"SCREEN: {self.m_screen_ms:>13.2f} ms")
           print(f"MEMORY: {self.used_kb():.2f} of {self.total_kb():.2f} kb {100 * self.used_kb() / self.total_kb():.2f}%")
+      
+      time.sleep(.001)
