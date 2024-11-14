@@ -19,24 +19,23 @@ class Pipe:
     self.y = y
 
 class Flappy(Scene):
-
   def __init__(self):
     self.bg  = color(115, 198, 225)
     self.bird_sprite = Image.load("/arcade/apps/flappy/bird.bmp")
     self.pipe_sprite = Image.load("/arcade/apps/flappy/pipe.bmp")
     self.gap = 32
-
-  def on_attach(self, stage):
-    stage.screen.fill(self.bg)
     self.bird  = Bird(64 , 64)
     self.pipes = [
       Pipe(100, random.randint(32 + self.gap//2, 96 - self.gap//2)),
       Pipe(200, random.randint(32 + self.gap//2, 96 - self.gap//2)),
     ]
-    self.frame = 0
     self.speed = 1
+    self.frame = 0
     self.score = 0
     self.game_over = False
+
+  def on_attach(self, c):
+    c.fill(self.bg)
 
   def update_pipe(self, c, pipe):
     pipe.x -= self.speed
@@ -46,7 +45,7 @@ class Flappy(Scene):
       pipe.y = random.randint(32 + self.gap//2, 96 - self.gap//2)
 
   def erase_pipe(self, c, pipe):
-    c.rect(pipe.x - 16, 0, 32, 128, self.bg)
+    c.rect(pipe.x + 15, 0, 1, 128, self.bg)
 
   def draw_pipe (self, c, pipe):
     c.image(self.pipe_sprite, pipe.x - 16, pipe.y - 64 - self.gap//2, 0, 48, 32, 64)
@@ -56,13 +55,20 @@ class Flappy(Scene):
     pass
 
   def on_render(self, c):
+    # erase the bird
     c.rect(self.bird.x - 8, self.bird.y - 8, 16, 16, self.bg)
+    
+    # move the bird
     self.bird. y += self.bird.vy
     self.bird.vy += self.bird.ay
+
+    # handle pipes
     for pipe in self.pipes:
       self.erase_pipe (c, pipe)
       self.update_pipe(c, pipe)
       self.draw_pipe  (c, pipe)
+
+    # draw bird
     c.image(self.bird_sprite, self.bird.x - 8, self.bird.y - 8)
 
   def on_button_down(self, c, button):

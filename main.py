@@ -1,11 +1,7 @@
 from arcade.stage import Stage
 
-from arcade.apps.system.dashboard import Dashboard
+from arcade.apps.pong import Pong
 
-stage = Stage(debug=False)
-stage.play(Dashboard)
+stage = Stage(debug=True)
+stage.play(Pong)
 stage.loop()
-
-
-
-

@@ -5,6 +5,7 @@ from arcade.scene import Scene
 from arcade.color import BLACK, WHITE
 from arcade.fonts import BLACK_ON_WHITE, WHITE_ON_BLACK
 
+from arcade.apps.pong   import Pong
 from arcade.apps.chess  import Chess
 from arcade.apps.snake  import Snake
 from arcade.apps.flappy import Flappy
@@ -15,6 +16,7 @@ class Dashboard(Scene):
   def __init__(self):
     self.version = str(Arcade.VERSION)
     self.options = [
+      ("Pong"  , Loading(Pong  )),
       ("Chess" , Loading(Chess )),
       ("Snake" , Loading(Snake )),
       ("Lights", Loading(Lights)),
@@ -36,8 +38,8 @@ class Dashboard(Scene):
       else:
         c.text (WHITE_ON_BLACK, title, 1, i * 10 + 12)
 
-  def on_attach(self, stage):
-    self.paint(stage.context)
+  def on_attach(self, c):
+    self.paint(c)
 
   def on_update(self, c):
     if c.is_button_down(Input.BUTTON_B):

@@ -4,12 +4,12 @@ from arcade.fonts import WHITE_ON_BLACK
 
 def Loading(scene):
   class Loading(Scene):
-    def on_attach(self, stage):
+    def on_attach(self, c):
       # draw loading screen
-      stage.screen.fill(0)
-      stage.screen.text(WHITE_ON_BLACK, "Loading...", 34, 60)
-      stage.screen.blit( )
+      c.stage.screen.fill(0)
+      c.stage.screen.text(WHITE_ON_BLACK, "Loading...", 34, 60)
+      c.stage.screen.blit( )
 
-      stage.play(scene)
+      c.stage.play(scene)
 
   return Loading

@@ -61,14 +61,14 @@ class Stage:
 
   def play(self, scene):
     if self.scene:
-      self.scene.on_detach(self)
+      self.scene.on_detach(self.context)
 
     self.scene =    None
     gc.collect()
     self.scene = scene()
 
     if self.scene:
-      self.scene.on_attach(self)
+      self.scene.on_attach(self.context)
 
   def update(self, c):
     self.input.poll(c)
