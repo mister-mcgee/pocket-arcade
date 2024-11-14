@@ -6,3 +6,4 @@
 boot_out.txt
 settings.toml
 System\ Volume\ Information
+*/**/__pycache__

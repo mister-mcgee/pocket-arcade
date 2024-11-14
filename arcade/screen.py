@@ -1,13 +1,13 @@
-from arcade.canvas import Canvas
+import arcade.canvas
 
 import board
 import busio
 import pwmio
 import digitalio
 
-from adafruit_rgb_display import st7735
+import adafruit_rgb_display.st7735 as st7735
 
-class Screen(Canvas):
+class Screen(arcade.canvas.Canvas):
   def __init__(self, stage): 
     super().__init__(129, 128)
 
