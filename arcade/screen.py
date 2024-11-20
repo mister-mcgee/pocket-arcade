@@ -31,7 +31,7 @@ class Screen(arcade.canvas.Canvas):
       rst      = digitalio.DigitalInOut(board.D11),
     )
 
-    self.backlight = pwmio.PWMOut(board.D13, frequency=1000, duty_cycle=int(.5 * 65535))
+    self.backlight = pwmio.PWMOut(board.D13, frequency=1000, duty_cycle=int(.25 * 65535))
 
   def set_brightness(self, brightness):
     self.backlight.duty_cycle = round(brightness * 65535)

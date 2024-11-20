@@ -38,6 +38,14 @@ class Input:
     self.poll_button(c, Input.BUTTON_A, self.a.value)
     self.poll_button(c, Input.BUTTON_B, self.b.value)
 
+  def reset(self):
+    self.state = [
+      self.l.value,
+      self.r.value,
+      self.a.value,
+      self.b.value
+    ]
+
   def poll_button(self, c, button, value):
     if self.state[button] != value:
       self.state[button]  =  value

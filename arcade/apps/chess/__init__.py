@@ -19,11 +19,13 @@ class Chess(Scene):
 
     self.ON_WHITE = 0b00000
     self.ON_BLACK = 0b01000
-    self.chess_sprite = Image.load("/arcade/apps/chess/chess.bmp")   
+    self.chess_sprite = Image.load("/arcade/apps/chess/chess.bmp")
 
     self.board = np.zeros((8, 8), dtype=np.uint8)
 
-  def on_attach(self, stage):
+    self.turn   =     0
+
+  def on_attach(self, c):
     self.put((0, 0), self.BLACK | self.ROOK)
     self.put((1, 0), self.BLACK | self.KNIGHT)
     self.put((2, 0), self.BLACK | self.BISHOP)
@@ -60,7 +62,7 @@ class Chess(Scene):
     self.put((6, 7), self.WHITE | self.KNIGHT)
     self.put((7, 7), self.WHITE | self.ROOK)
 
-    self.draw_board(stage.screen)
+    self.draw_board(c)
 
   def in_bounds(self, where):
     return (
@@ -74,9 +76,9 @@ class Chess(Scene):
 
   def draw_piece(self, c, piece, where):
     if (where[0] + where[1]) & 1:
-      piece = piece | self.ON_WHITE
-    else:
       piece = piece | self.ON_BLACK
+    else:
+      piece = piece | self.ON_WHITE
 
     c.image(self.chess_sprite,
       where[0]  * 16, 

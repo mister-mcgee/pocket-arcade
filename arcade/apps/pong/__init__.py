@@ -2,40 +2,46 @@ from arcade.input import Input
 from arcade.scene import Scene
 
 from arcade.color import WHITE, BLACK
+from arcade.fonts import BLACK_ON_WHITE, WHITE_ON_BLACK
+
+from arcade.apps.system.loading  import Loading
+from arcade.apps.pong.one_player import OnePlayer
+from arcade.apps.pong.two_player import TwoPlayer
 
 class Pong(Scene):
   def __init__(self):
-    self.paddle1_x = 64
-    self.paddle2_x = 64
-    self.ball_x  = 64
-    self.ball_y  = 64
-    self.ball_vx =  1
-    self.ball_vy =  1
+    self.options = [
+      ("One Player", Loading(OnePlayer)),
+      ("Two Player", Loading(TwoPlayer)),
+    ]
+    self.option  = -1
 
-  def on_update(self, c):
-    if c.is_button_down(Input.BUTTON_L):
-      self.paddle1_x = max( 12, self.paddle1_x - 4)
-
-    if c.is_button_down(Input.BUTTON_R):
-      self.paddle1_x = min(116, self.paddle1_x + 4)
-
-    self.ball_x += self.ball_vx
-    self.ball_y += self.ball_vy
-
-    if self.ball_x < 6 or self.ball_x > 122:
-      self.ball_vx *= -1
-
-    if self.ball_y < 6 or self.ball_y > 122:
-      self.ball_vy *= -1
-
-  def on_render(self, c):
+  def paint(self, c):
     c.fill(0)
+    c.rect(0, 0, 128, 10, WHITE)
+    c.text(BLACK_ON_WHITE, "Pong", 52, 1)
 
-    c.rect(self.paddle2_x - 12,   1, 24, 6, WHITE)
-    c.rect(self.paddle1_x - 12, 121, 24, 6, WHITE)
-    c.rect(
-      self.ball_x - 3,
-      self.ball_y - 3,
-      6, 6, WHITE
-    )
+    for i, (title, _) in enumerate(self.options):
+      if i == self.option:
+        c.hline(4, i * 10 + 20, len(title) * 6, WHITE)
+        c.text (WHITE_ON_BLACK, title, 5, i * 10 + 12)
+      else:
+        c.text (WHITE_ON_BLACK, title, 1, i * 10 + 12)
 
+  def on_attach(self, c):
+    self.paint(c)
+
+  def on_button_down(self, c, button):
+    if   button == Input.BUTTON_L:
+      self.option = (self.option + len(self.options) - 1) % len(self.options)
+      self.paint(c)
+    elif button == Input.BUTTON_R:
+      self.option = (self.option                     + 1) % len(self.options)
+      self.paint(c)
+    elif button == Input.BUTTON_A:
+      for i, (_, scene) in enumerate(self.options):
+        if i == self.option:
+          c.stage.play(scene)
+    elif button == Input.BUTTON_B:
+      from arcade.apps.system.dashboard import Dashboard
+      c.stage.play(Dashboard)

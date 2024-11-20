@@ -1,7 +1,8 @@
 from arcade.stage import Stage
 
-from arcade.apps.pong import Pong
+from arcade.apps.system.dashboard import Dashboard
 
-stage = Stage(debug=True)
-stage.play(Pong)
+stage = Stage(debug=False)
+stage.screen.set_brightness(.5)
+stage.play(Dashboard)
 stage.loop()

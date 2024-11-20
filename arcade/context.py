@@ -27,6 +27,9 @@ class Context:
   def text(self, atlas, text, x=0, y=0):
     self.stage.screen.text(atlas, text, x, y)
 
+  def sprite(self, atlas, i=0, x=0, y=0):
+    self.stage.screen.sprite(atlas, i, x, y)
+
   def is_button_up  (self, button):
     return self.stage.input.is_button_up  (button)
 

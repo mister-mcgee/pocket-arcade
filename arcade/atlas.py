@@ -1,8 +1,8 @@
 class Atlas:
   def __init__(self, 
     image, 
-    cols=19,
-    rows= 5
+    cols=1,
+    rows=1
   ):
     self.image = image
     self.cols  = cols

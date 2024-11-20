@@ -30,8 +30,8 @@ class Settings(Scene):
       else:
         c.text (WHITE_ON_BLACK, title, 1, i * 10 + 12)
 
-  def on_attach(self, stage):
-    self.paint(stage.context)
+  def on_attach(self, c):
+    self.paint(c)
 
   def on_button_down(self, c, button):
     if   button == Input.BUTTON_L:

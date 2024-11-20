@@ -46,9 +46,9 @@ class Canvas:
   def vline(self, x, y, h, c):
     self.rect(x, y, 1, h, c)
 
-  def image(self, i, x=0, y=0, sx=0, sy=0, sw=None, sh=None):
-    sw = sw or i.w
-    sh = sh or i.h
+  def image(self, image, x=0, y=0, sx=0, sy=0, sw=None, sh=None):
+    sw = sw or image.w
+    sh = sh or image.h
 
     # clip dst rectangle
     x0, y0, x1, y1 = clip(0, 0, self.w, self.h, x, y, x + sw, y + sh)
@@ -59,7 +59,7 @@ class Canvas:
     dh = (y1 - y0) - sh
     
     # clip src rectangle
-    x2, y2, x3, y3 = clip(0, 0, i.w, i.h, 
+    x2, y2, x3, y3 = clip(0, 0, image.w, image.h, 
       sx + dx, 
       sy + dy,
       sx + dx + sw + dw,
@@ -73,14 +73,17 @@ class Canvas:
       return
 
     # populate buffer
-    self.buffer[y0: y1, x0: x1] = i.buffer[y2: y3, x2: x3]
+    self.buffer[y0: y1, x0: x1] = image.buffer[y2: y3, x2: x3]
+
+  def sprite(self, atlas, i=0, x=0, y=0):
+    self.image(
+      atlas.image, x, y,
+      (i  % atlas.cols) * atlas.col_w,
+      (i // atlas.cols) * atlas.row_h,
+      atlas.col_w, atlas.row_h
+    )
 
   def text(self, atlas, text, x=0, y=0):
-    for c in text:
-      self.image(
-        atlas.image, x, y, 
-        ((ord(c) - 32)  % atlas.cols) * atlas.col_w, 
-        ((ord(c) - 32) // atlas.cols) * atlas.row_h, 
-        atlas.col_w, atlas.row_h
-      )
+    for c in str(text):
+      self.sprite(atlas, ord(c) - 32, x, y)
       x += atlas.col_w

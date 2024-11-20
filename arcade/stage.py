@@ -1,9 +1,12 @@
 import gc
 import time
+import supervisor
 
 from arcade.input   import Input
 from arcade.screen  import Screen
 from arcade.context import Context
+
+from arcade.fonts import WHITE_ON_BLACK
 
 class Stage:
   def __init__(self, *, fps=24, debug=False):
@@ -12,6 +15,8 @@ class Stage:
     self.input   = Input  (self)
     self.screen  = Screen (self)
     self.context = Context(self)
+
+    self.hold_all = 0
 
     # metrics
     self.m_fps       = 0
@@ -50,6 +55,12 @@ class Stage:
     # Scene
     self.scene = None
 
+  def reload(self):
+    self.screen.fill(0)
+    self.screen.text(WHITE_ON_BLACK, "Resetting...", 28, 60)
+    self.screen.blit( )
+    supervisor.reload()
+
   def used_kb(self):
     return gc.mem_alloc() / 1000
   
@@ -66,12 +77,26 @@ class Stage:
     self.scene =    None
     gc.collect()
     self.scene = scene()
+    self.input . reset()
 
     if self.scene:
       self.scene.on_attach(self.context)
 
   def update(self, c):
     self.input.poll(c)
+    if (
+      c.is_button_down(Input.BUTTON_L) and
+      c.is_button_down(Input.BUTTON_R) and
+      c.is_button_down(Input.BUTTON_A) and
+      c.is_button_down(Input.BUTTON_B)
+    ):
+      self.hold_all += c.dt
+    else:
+      self.hold_all  =    0
+
+    if self.hold_all > 2:
+      self.reload()
+
     if self.scene:
       self.scene.on_update(c)
 

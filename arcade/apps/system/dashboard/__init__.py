@@ -5,22 +5,15 @@ from arcade.scene import Scene
 from arcade.color import BLACK, WHITE
 from arcade.fonts import BLACK_ON_WHITE, WHITE_ON_BLACK
 
-from arcade.apps.pong   import Pong
-from arcade.apps.chess  import Chess
-from arcade.apps.snake  import Snake
-from arcade.apps.flappy import Flappy
-from arcade.apps.lights import Lights
-from arcade.apps.system.loading import Loading
+from arcade.apps.pong  import Pong
+from arcade.apps.snake import Snake
 
 class Dashboard(Scene):
   def __init__(self):
     self.version = str(Arcade.VERSION)
     self.options = [
-      ("Pong"  , Loading(Pong  )),
-      ("Chess" , Loading(Chess )),
-      ("Snake" , Loading(Snake )),
-      ("Lights", Loading(Lights)),
-      ("Floppy Bird", Loading(Flappy)),
+      ("Pong"  , Pong ),
+      ("Snake" , Snake),
     ]
     self.option  = -1
 

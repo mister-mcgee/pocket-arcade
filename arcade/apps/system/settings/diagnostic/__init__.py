@@ -17,10 +17,10 @@ class Diagnostic(Scene):
     self.b_up_sprite = Image.load("/arcade/apps/system/settings/diagnostic/b_up.bmp")
     self.b_dn_sprite = Image.load("/arcade/apps/system/settings/diagnostic/b_dn.bmp")
 
-  def on_attach(self, stage):
-    stage.screen.fill(0)
-    stage.screen.rect(0, 0, 128, 10, WHITE)
-    stage.screen.text(BLACK_ON_WHITE, "Diagnostic", 34, 1)
+  def on_attach(self, c):
+    c.fill(0)
+    c.rect(0, 0, 128, 10, WHITE)
+    c.text(BLACK_ON_WHITE, "Diagnostic", 34, 1)
 
   def on_update(self, c):
     if c.is_button_down(Input.BUTTON_B):
