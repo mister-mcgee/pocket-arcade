@@ -4,15 +4,15 @@ from arcade.scene import Scene
 from arcade.color import WHITE, BLACK
 from arcade.fonts import BLACK_ON_WHITE, WHITE_ON_BLACK
 
-from arcade.apps.system.loading  import Loading
-from arcade.apps.snake.normal import Normal
-from arcade.apps.snake.casual import Casual
+from arcade.apps.system.loading import Loading
+from arcade.apps.snake.standard import Standard
+from arcade.apps.snake.casual   import Casual
 
 class Snake(Scene):
   def __init__(self):
     self.options = [
-      ("Normal", Loading(Normal)),
-      ("Casual", Loading(Casual)),
+      ("Standard", Loading(Standard)),
+      ("Casual"  , Loading(Casual  )),
     ]
     self.option  = -1
 

@@ -10,7 +10,7 @@ from arcade.color import WHITE, BLACK
 from arcade.fonts import WHITE_ON_BLACK
 
 
-class Normal(Scene):
+class Standard(Scene):
   def __init__(self):
     self.snake_sprite = Atlas(Image.load("/arcade/apps/snake/snake.bmp"), 16, 5)
     
