@@ -2,15 +2,15 @@ from arcade.image import Image
 from arcade.input import Input
 from arcade.scene import Scene
 
-from arcade.color import WHITE
+from arcade.color import BLACK, WHITE
 from arcade.fonts import WHITE_ON_BLACK
 
 import random
 
 class OnePlayer(Scene):
-  def __init__(self):
+  def __init__(self):    
+    self.zone_sprite = Image.load("/arcade/apps/pong/zone.bmp")
     self.pong_sprite = Image.load("/arcade/apps/pong/pong.bmp")
-    self.ball_sprite = Image.load("/arcade/apps/pong/ball.bmp")
 
   def on_attach(self, c):
     self.x    = 64
@@ -25,14 +25,23 @@ class OnePlayer(Scene):
     self.suspended = True
     c.fill(0)
 
-    c.hline( 0, 64, 38, WHITE)
-    c.hline(90, 64, 38, WHITE)
+    c.image(self.zone_sprite, 0, 63, 0, 16, 128, 2)
     c.text(WHITE_ON_BLACK, "1 Player", 40, 60)
 
     if random.random() < 0.5:
       self.p1_serve()
     else:
       self.p2_serve()
+
+  def p1_wins(self, c):
+    self.suspended = True
+    c.rect(41, 60, 46, 8, 0)
+    c.text(WHITE_ON_BLACK, "P1 Wins", 43, 60)
+
+  def p2_wins(self, c):
+    self.suspended = True
+    c.rect(41, 60, 46, 8, 0)
+    c.text(WHITE_ON_BLACK, "P2 Wins", 43, 60)
 
   def p1_serve(self):
     self.x = 64
@@ -47,12 +56,16 @@ class OnePlayer(Scene):
     self.vy = 4
 
   def on_button_down(self, c, button):
-    self.suspended = False
+    if self.suspended:
+      c.fill(0)
+      self.p1_score = 0
+      self.p2_score = 0
+      self.suspended  =  False
 
   def on_render(self, c):
-    # erase the paddles
-    c.rect(self.p2_x - 16,   2, 32, 8, 0)
-    c.rect(self.p1_x - 16, 118, 32, 8, 0)
+    # draw the zones
+    c.image(self.zone_sprite, 0,   0, 0,  8, 128, 8)
+    c.image(self.zone_sprite, 0, 120, 0,  0, 128, 8)
 
     if not self.suspended:
       # erase the ball
@@ -64,12 +77,11 @@ class OnePlayer(Scene):
 
     if c.is_button_down(Input.BUTTON_R):
       self.p1_x = min(112, self.p1_x + 4)
-
     
-    if self.p2_x - 15 > self.x:
+    if self.p2_x - 12 > self.x:
       self.p2_x = max( 16, self.p2_x - 4)
 
-    if self.p2_x + 15 < self.x:
+    if self.p2_x + 12 < self.x:
       self.p2_x = min(112, self.p2_x + 4)
 
     if not self.suspended:
@@ -83,44 +95,51 @@ class OnePlayer(Scene):
         self.vx *= -1
 
       if(
-        self.x + 4 > self.p1_x - 16 and
-        self.x - 4 < self.p1_x + 16 and
-        self.y + 4 > 114
+        self.x + 4 >= self.p1_x - 16 and
+        self.x - 4 <= self.p1_x + 16 and
+        self.y >= 116
       ):
-        self.y  = 114
+        self.y  = 116
         self.vy *= -1
         self.vx = (self.x - self.p1_x) / 4
 
       if(
-        self.x + 4 > self.p2_x - 16 and
-        self.x - 4 < self.p2_x + 16 and
-        self.y - 4 < 14
+        self.x + 4 >= self.p2_x - 16 and
+        self.x - 4 <= self.p2_x + 16 and
+        self.y <= 12
       ):
-        self.y  = 14
+        self.y  = 12
         self.vy *= -1
         self.vx = (self.x - self.p2_x) / 4
       
-      if self.y <  4:
-        self.p2_score += 1
+      if self.y <  12:
+        self.p1_score += 1
         self.p2_serve()
 
-      if self.y > 124:
-        self.p1_score += 1
+      if self.y > 116:
+        self.p2_score += 1
         self.p1_serve()
 
     # draw the scores
     s1 = str(self.p1_score)
     s2 = str(self.p2_score)
-    c.text(WHITE_ON_BLACK, s1, 64 - len(s1) * 3, 28)
-    c.text(WHITE_ON_BLACK, s2, 64 - len(s2) * 3, 92)
+    c.text(WHITE_ON_BLACK, s1, 64 - len(s1) * 3, 92)
+    c.text(WHITE_ON_BLACK, s2, 64 - len(s2) * 3, 28)
 
     # draw the paddles
-    c.image(self.pong_sprite, self.p2_x - 16,   2, 0, 0, 32, 8)
-    c.image(self.pong_sprite, self.p1_x - 16, 118, 0, 8, 32, 8)
+    c.image(self.pong_sprite, self.p2_x - 16,   0, 32, 0, 32, 8)
+    c.image(self.pong_sprite, self.p1_x - 16, 120,  0, 0, 32, 8)
 
     if not self.suspended:
+      c.image(self.zone_sprite, 0,  63, 0, 16, 128, 2)
       # draw the ball
-      c.image(self.ball_sprite, self.x - 4, self.y - 4)
+      c.image(self.pong_sprite, self.x - 4, self.y - 4, 64, 0, 8, 8)
+
+    if self.p1_score >= 11:
+      self.p1_wins(c)
+
+    if self.p2_score >= 11:
+      self.p2_wins(c)
 
 
 

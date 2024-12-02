@@ -201,6 +201,9 @@ class Casual(Scene):
       if self.hold_b > 128:
         self.reset(c)
 
+  def is_safe(self, cell):
+    pass
+
   def on_render(self, c):
     if self.game_over: 
       c.rect(0, 126,         128, 2, BLACK)
@@ -232,6 +235,7 @@ class Casual(Scene):
         self.paint_score(c)
         self.place_fruit(c)
       else:
+        self.next_move = self.last_move
         n = self.at(self.relative(self.head, self.FROM_SOUTH))
         s = self.at(self.relative(self.head, self.FROM_NORTH))
         e = self.at(self.relative(self.head, self.FROM_WEST ))
@@ -246,7 +250,8 @@ class Casual(Scene):
           self.game_over  =  True
           self.paint_game_over(c)
           return
-
+      
+        self.frame -= 1
     self.frame += 1
 
   def on_button_down(self, c, button):
