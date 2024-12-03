@@ -5,8 +5,8 @@ from arcade.color import WHITE, BLACK
 from arcade.fonts import BLACK_ON_WHITE, WHITE_ON_BLACK
 
 from arcade.apps.system.loading  import Loading
-from arcade.apps.pong.one_player import OnePlayer
-from arcade.apps.pong.two_player import TwoPlayer
+from arcade.apps.games.pong.one_player import OnePlayer
+from arcade.apps.games.pong.two_player import TwoPlayer
 
 class Pong(Scene):
   def __init__(self):

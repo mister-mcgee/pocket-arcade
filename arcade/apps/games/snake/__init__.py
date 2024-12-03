@@ -5,8 +5,8 @@ from arcade.color import WHITE, BLACK
 from arcade.fonts import BLACK_ON_WHITE, WHITE_ON_BLACK
 
 from arcade.apps.system.loading import Loading
-from arcade.apps.snake.standard import Standard
-from arcade.apps.snake.casual   import Casual
+from arcade.apps.games.snake.standard import Standard
+from arcade.apps.games.snake.casual   import Casual
 
 class Snake(Scene):
   def __init__(self):

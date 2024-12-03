@@ -89,3 +89,13 @@ class Blackjack(Scene):
   def draw_hand(self, c, hand, x, y, w=17):
     for i, card in enumerate(hand):
       self.draw_card(c, card, i * w + x, y)
+
+  def hit(self, c):
+    self.deal(self.deck, self.player)
+    self.draw_hand(c, self.player, 1, 105)
+
+  def stand(self, c):
+    pass
+
+  def double(self, c):
+    pass

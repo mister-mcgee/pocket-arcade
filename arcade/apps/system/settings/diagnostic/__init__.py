@@ -24,7 +24,7 @@ class Diagnostic(Scene):
 
   def on_update(self, c):
     if c.is_button_down(Input.BUTTON_B):
-      self.hold_b += 4
+      self.hold_b += 8
     else:
       self.hold_b  = 0
 

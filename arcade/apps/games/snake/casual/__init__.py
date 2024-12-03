@@ -9,8 +9,7 @@ from arcade.atlas import Atlas
 from arcade.color import WHITE, BLACK
 from arcade.fonts import WHITE_ON_BLACK
 
-
-class Standard(Scene):
+class Casual(Scene):
   def __init__(self):
     self.snake_sprite = Atlas(Image.load("/arcade/apps/snake/snake.bmp"), 16, 5)
     
@@ -195,12 +194,15 @@ class Standard(Scene):
         c.is_button_down(Input.BUTTON_A) or
         c.is_button_down(Input.BUTTON_B)
       ):
-        self.hold_b += 4
+        self.hold_b += 8
       else:
         self.hold_b  = 0
 
       if self.hold_b > 128:
         self.reset(c)
+
+  def is_safe(self, cell):
+    pass
 
   def on_render(self, c):
     if self.game_over: 
@@ -233,9 +235,23 @@ class Standard(Scene):
         self.paint_score(c)
         self.place_fruit(c)
       else:
-        self.game_over  =  True
-        self.paint_game_over(c)
+        self.next_move = self.last_move
+        n = self.at(self.relative(self.head, self.FROM_SOUTH))
+        s = self.at(self.relative(self.head, self.FROM_NORTH))
+        e = self.at(self.relative(self.head, self.FROM_WEST ))
+        w = self.at(self.relative(self.head, self.FROM_EAST ))
 
+        n = n == 0 or n == self.FRUIT_0 or n == self.FRUIT_1 or n == self.FRUIT_2 or n == self.FRUIT_3 or n == self.FRUIT_4 or n == self.FRUIT_5
+        s = s == 0 or s == self.FRUIT_0 or s == self.FRUIT_1 or s == self.FRUIT_2 or s == self.FRUIT_3 or s == self.FRUIT_4 or s == self.FRUIT_5
+        e = e == 0 or e == self.FRUIT_0 or e == self.FRUIT_1 or e == self.FRUIT_2 or e == self.FRUIT_3 or e == self.FRUIT_4 or e == self.FRUIT_5
+        w = w == 0 or w == self.FRUIT_0 or w == self.FRUIT_1 or w == self.FRUIT_2 or w == self.FRUIT_3 or w == self.FRUIT_4 or w == self.FRUIT_5
+
+        if not (n or s or e or w):
+          self.game_over  =  True
+          self.paint_game_over(c)
+          return
+      
+        self.frame -= 1
     self.frame += 1
 
   def on_button_down(self, c, button):

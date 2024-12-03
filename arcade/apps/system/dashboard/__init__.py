@@ -5,8 +5,8 @@ from arcade.scene import Scene
 from arcade.color import BLACK, WHITE
 from arcade.fonts import BLACK_ON_WHITE, WHITE_ON_BLACK
 
-from arcade.apps.pong  import Pong
-from arcade.apps.snake import Snake
+from arcade.apps.games.pong  import Pong
+from arcade.apps.games.snake import Snake
 
 class Dashboard(Scene):
   def __init__(self):
@@ -36,7 +36,7 @@ class Dashboard(Scene):
 
   def on_update(self, c):
     if c.is_button_down(Input.BUTTON_B):
-      self.hold_b += 4
+      self.hold_b += 8
     else:
       self.hold_b  = 0
 
