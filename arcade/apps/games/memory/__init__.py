@@ -88,15 +88,13 @@ class Memory(Scene):
 
   def on_complete(self, c):
     s1 = "Game Over"
-    s2 = f"Matches {self.matches}"
-    s3 = f"Guesses {self.guesses}"
-    w = max(len(s1), len(s2), len(s3))
+    s2 = f"Guesses {self.guesses}"
+    w = max(len(s1), len(s2))
 
-    c.rect(62 - w * 3, 50, w * 6 + 4, 28, WHITE)
-    c.rect(63 - w * 3, 51, w * 6 + 2, 26, BLACK)
-    c.text(WHITE_ON_BLACK, s1, 64 - len(s1) * 3, 52)
-    c.text(WHITE_ON_BLACK, s2, 64 - len(s2) * 3, 60)
-    c.text(WHITE_ON_BLACK, s3, 64 - len(s3) * 3, 68)    
+    c.rect(62 - w * 3, 54, w * 6 + 4, 20, WHITE)
+    c.rect(63 - w * 3, 55, w * 6 + 2, 18, BLACK)
+    c.text(WHITE_ON_BLACK, s1, 64 - len(s1) * 3, 56)
+    c.text(WHITE_ON_BLACK, s2, 64 - len(s2) * 3, 64)
 
   def on_button_down(self, c, button):
     if self.complete:
