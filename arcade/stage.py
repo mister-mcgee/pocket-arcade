@@ -57,7 +57,7 @@ class Stage:
 
   def reload(self):
     self.screen.fill(0)
-    self.screen.text(WHITE_ON_BLACK, "Resetting...", 28, 60)
+    self.screen.text(WHITE_ON_BLACK, "Returning Home...", 13, 60)
     self.screen.blit( )
     supervisor.reload()
 

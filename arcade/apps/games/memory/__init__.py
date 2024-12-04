@@ -105,13 +105,14 @@ class Memory(Scene):
       return
     
     if self.select_b != -1:
-      if self.cards[self.select_a] == self.cards[self.select_b]:
+      if self.cards[self.select_a] == self.cards[self.select_b]:        
         self.guesses += 1
         self.matches += 1
         if self.matches == 8:
           self.complete = True
           self.on_complete(c)
           return
+        self.hover = self.increment_selector(self.hover)
       else:
         self.hover = self.select_b
         self.cards[self.select_a] ^= self.FACE_UP
