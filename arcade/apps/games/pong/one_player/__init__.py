@@ -9,8 +9,8 @@ import random
 
 class OnePlayer(Scene):
   def __init__(self):    
-    self.zone_sprite = Image.load("/arcade/apps/pong/zone.bmp")
-    self.pong_sprite = Image.load("/arcade/apps/pong/pong.bmp")
+    self.zone_sprite = Image.load("/arcade/apps/games/pong/zone.bmp")
+    self.pong_sprite = Image.load("/arcade/apps/games/pong/pong.bmp")
 
   def on_attach(self, c):
     self.x    = 64
@@ -21,7 +21,7 @@ class OnePlayer(Scene):
     self.p2_x = 64
     self.p1_score = 0
     self.p2_score = 0
-    self.p2_mode  = 0 # center
+    self.hold_any  =    0
     self.suspended = True
     c.fill(0)
 
@@ -55,12 +55,22 @@ class OnePlayer(Scene):
     self.vx = 0
     self.vy = 4
 
-  def on_button_down(self, c, button):
-    if self.suspended:
+  def on_update(self, c):
+    if self.suspended and (
+      c.is_button_down(Input.BUTTON_L) or
+      c.is_button_down(Input.BUTTON_R) or
+      c.is_button_down(Input.BUTTON_A) or
+      c.is_button_down(Input.BUTTON_B)
+    ):
+      self.hold_any += 8
+    else:
+      self.hold_any  = 0
+
+    if self.hold_any > 128:
       c.fill(0)
       self.p1_score = 0
       self.p2_score = 0
-      self.suspended  =  False
+      self.suspended = False
 
   def on_render(self, c):
     # draw the zones
@@ -71,20 +81,19 @@ class OnePlayer(Scene):
       # erase the ball
       c.rect(self.x - 4, self.y - 4, 8, 8, 0)
 
-    # update the paddles
-    if c.is_button_down(Input.BUTTON_L):
-      self.p1_x = max( 16, self.p1_x - 4)
+      # update the paddles
+      if c.is_button_down(Input.BUTTON_L):
+        self.p1_x = max( 16, self.p1_x - 4)
 
-    if c.is_button_down(Input.BUTTON_R):
-      self.p1_x = min(112, self.p1_x + 4)
-    
-    if self.p2_x - 12 > self.x:
-      self.p2_x = max( 16, self.p2_x - 4)
+      if c.is_button_down(Input.BUTTON_R):
+        self.p1_x = min(112, self.p1_x + 4)
+      
+      if self.p2_x - 12 > self.x:
+        self.p2_x = max( 16, self.p2_x - 4)
 
-    if self.p2_x + 12 < self.x:
-      self.p2_x = min(112, self.p2_x + 4)
+      if self.p2_x + 12 < self.x:
+        self.p2_x = min(112, self.p2_x + 4)
 
-    if not self.suspended:
       # update the ball
       self.x += self.vx
       self.y += self.vy
@@ -140,6 +149,10 @@ class OnePlayer(Scene):
 
     if self.p2_score >= 11:
       self.p2_wins(c)
+
+    if self.suspended:
+      c.rect(0, 68,           128, 2, BLACK)
+      c.rect(0, 68, self.hold_any, 2, WHITE)
 
 
 

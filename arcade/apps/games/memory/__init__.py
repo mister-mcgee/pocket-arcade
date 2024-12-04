@@ -136,6 +136,6 @@ class Memory(Scene):
       elif self.select_b == -1:
         self.select_b = self.hover
         self.cards[self.select_b] ^= self.FACE_UP
-        self.hover = self.increment_selector(self.hover)
+        # self.hover = self.increment_selector(self.hover)
       self.paint(c)
 

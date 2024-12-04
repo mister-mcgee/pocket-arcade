@@ -5,9 +5,11 @@ from arcade.scene import Scene
 from arcade.color import BLACK, WHITE
 from arcade.fonts import BLACK_ON_WHITE, WHITE_ON_BLACK
 
-from arcade.apps.games.pong     import Pong
-from arcade.apps.games.snake    import Snake
-from arcade.apps.games.memory   import Memory
+from arcade.apps.games.pong   import Pong
+from arcade.apps.games.snake  import Snake
+from arcade.apps.games.floppy import Floppy
+from arcade.apps.games.memory import Memory
+from arcade.apps.games.lights import Lights
 
 from arcade.apps.system.loading import Loading
 
@@ -17,11 +19,12 @@ class Dashboard(Scene):
     self.options = [
       ("Pong"  , Pong ),
       ("Snake" , Snake),
-      ("Memory", Loading(Memory))
+      ("Floppy", Loading(Floppy)),
+      ("Memory", Loading(Memory)),
+      ("Lights", Loading(Lights)),
     ]
-    self.option  = -1
-
-    self.hold_b = 0
+    self.option = -1
+    self.hold_b =  0
 
   def paint(self, c):
     c.fill(0)

@@ -12,7 +12,7 @@ from arcade.fonts import WHITE_ON_BLACK
 
 class Standard(Scene):
   def __init__(self):
-    self.snake_sprite = Atlas(Image.load("/arcade/apps/snake/snake.bmp"), 16, 5)
+    self.snake_sprite = Atlas(Image.load("/arcade/apps/games/snake/snake.bmp"), 16, 5)
     
     self.DIRECTION = [
       ( 0,  0),
@@ -239,8 +239,8 @@ class Standard(Scene):
     self.frame += 1
 
   def on_button_down(self, c, button):
-    if button == Input.BUTTON_L:
+    if button == Input.BUTTON_L or button == Input.BUTTON_A:
       self.next_move = ((self.last_move - 1) + 1) % 4 + 1
-    if button == Input.BUTTON_R:
+    if button == Input.BUTTON_R or button == Input.BUTTON_B:
       self.next_move = ((self.last_move - 1) + 3) % 4 + 1
 
