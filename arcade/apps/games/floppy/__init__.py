@@ -39,13 +39,13 @@ class Floppy(Scene):
   def __init__(self):
     self.disk_sprite = Image.load("/arcade/apps/games/floppy/disk.bmp")
     self.plug_sprite = Image.load("/arcade/apps/games/floppy/plug.bmp")
-    self.spark_color = color(255, 213, 0)
+    self.spark_color = WHITE #color(255, 213, 0)
     self.bg = color(115, 198, 225)
 
   def on_attach(self, c):
-    self.reset()
     c.fill(self.bg)
-    self.game_start = True
+    self.reset()
+    
 
   def random_height(self, gap=80):
     return random.randint(
@@ -55,7 +55,7 @@ class Floppy(Scene):
 
   def reset(self):
     self.speed =  1
-    self.score =  0
+    self.score =  100
     self.frame =  0
     self.game_over = False
   
@@ -138,7 +138,7 @@ class Floppy(Scene):
       if plug.x < -16:
         plug.x     += 300
         self.score +=   1
-        plug.set_gap(max(80 - self.score , 48))
+        plug.set_gap(max(80 - self.score , 32))
         plug.y = self.random_height( plug.gap )
       self.draw_plug(c, plug)
 
@@ -160,8 +160,8 @@ class Floppy(Scene):
         self.disk.x + 8 > plug.x - 16
       ):
         if (
-          self.disk.y < plug.y - plug.half_gap or
-          self.disk.y > plug.y + plug.half_gap
+          self.disk.y - 8 < plug.y - plug.half_gap or
+          self.disk.y + 8 > plug.y + plug.half_gap
         ):          
           self.game_over = True
           self.on_game_over(c)
@@ -182,7 +182,7 @@ class Floppy(Scene):
       self.draw_spark(c, spark)
 
   def on_button_down(self, c, button):
-    self.disk.vy = -5
+    self.disk.vy = -6
 
     
 
