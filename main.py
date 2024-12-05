@@ -7,15 +7,15 @@ from arcade.fonts import WHITE_ON_BLACK
 
 stage = Stage(debug=False)
 
-if   microcontroller.nvm[0:3] == b"dev"    and     supervisor.runtime.usb_connected:
+if   microcontroller.nvm[0:3] == b"dev" and     supervisor.runtime.usb_connected:
   stage.screen.fill(0)
   stage.screen.text(WHITE_ON_BLACK, "Developer Mode...", 13, 60)
   stage.screen.blit( )
-elif microcontroller.nvm[0:3] == b"dev"    and not supervisor.runtime.usb_connected:
+elif microcontroller.nvm[0:3] == b"dev" and not supervisor.runtime.usb_connected:
   # mode mismatch, reset
   microcontroller.nvm[0:3] = b"\0\0\0"
   microcontroller.reset()
-elif microcontroller.nvm[0:3] == b"\0\0\0" and     supervisor.runtime.usb_connected:
+elif microcontroller.nvm[0:3] != b"dev" and     supervisor.runtime.usb_connected:
   # mode mismatch, reset
   microcontroller.nvm[0:3] = b"dev"
   microcontroller.reset()
