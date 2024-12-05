@@ -8,7 +8,7 @@ stage = Stage(debug=False)
 
 if   microcontroller.nvm[0:3] == b"dev" and     supervisor.runtime.usb_connected:
   stage.screen.fill(0)
-  stage.screen.image(Image.load("/arcade/apps/system/dev.bmp"), 32, 48)
+  stage.screen.image(Image.load("/arcade/icons/dev.bmp"), 52, 52)
   stage.screen.blit( )
 elif microcontroller.nvm[0:3] == b"dev" and not supervisor.runtime.usb_connected:
   # mode mismatch, reset

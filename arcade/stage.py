@@ -56,11 +56,9 @@ class Stage:
     # Scene
     self.scene = None
 
-    self.home_sprite = Image.load("/arcade/apps/system/home.bmp")
-
   def reload(self):
     self.screen.fill(0)
-    self.screen.image(self.home_sprite, 56, 56)
+    self.screen.image(Image.load("/arcade/icons/home.bmp"), 56, 56)
     self.screen.blit( )
     supervisor.reload()
 
