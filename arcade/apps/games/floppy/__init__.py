@@ -6,7 +6,7 @@ from arcade.image import Image
 from arcade.input import Input
 from arcade.scene import Scene
 
-from arcade.color import WHITE, BLACK
+from arcade.color import WHITE, BLACK, RED
 from arcade.fonts import WHITE_ON_BLACK
 
 class Floppy(Scene):
@@ -55,7 +55,7 @@ class Floppy(Scene):
 
   def reset(self):
     self.hold_any = 0
-    self.speed =  1
+    self.speed =  2
     self.score =  0
     self.frame =  0
     self.game_over = False
@@ -125,19 +125,19 @@ class Floppy(Scene):
   def on_render(self, c):
     if self.game_over:
       c.rect(0, 126,           128, 2, self.bg)
-      c.rect(0, 126, self.hold_any, 2,   WHITE)
+      c.rect(0, 126, self.hold_any, 2, RED    )
       return
 
     # erase elements
     for spark in self.sparks:
       c.rect(spark.x - 1, spark.y - 1, 2, 2, self.bg)
     for plug in self.plugs:
-      c.rect(plug.x + 15, 0, 1, 128, self.bg)
+      c.rect(plug.x - self.speed + 16, 0, self.speed, 128, self.bg)
     c.rect(self.disk.x - 8, self.disk.y - 8, 16, 16, self.bg)
 
     # update and draw plugs
     for plug in self.plugs:
-      plug.x -= 1
+      plug.x -= self.speed
       if plug.x < -16:
         plug.x     += 300
         self.score +=   1

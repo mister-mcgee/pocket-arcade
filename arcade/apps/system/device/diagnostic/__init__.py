@@ -8,14 +8,14 @@ class Diagnostic(Scene):
   def __init__(self):
     self.hold_b = 0
     
-    self.l_up_sprite = Image.load("/arcade/apps/system/settings/diagnostic/l_up.bmp")
-    self.l_dn_sprite = Image.load("/arcade/apps/system/settings/diagnostic/l_dn.bmp")
-    self.r_up_sprite = Image.load("/arcade/apps/system/settings/diagnostic/r_up.bmp")
-    self.r_dn_sprite = Image.load("/arcade/apps/system/settings/diagnostic/r_dn.bmp")
-    self.a_up_sprite = Image.load("/arcade/apps/system/settings/diagnostic/a_up.bmp")
-    self.a_dn_sprite = Image.load("/arcade/apps/system/settings/diagnostic/a_dn.bmp")
-    self.b_up_sprite = Image.load("/arcade/apps/system/settings/diagnostic/b_up.bmp")
-    self.b_dn_sprite = Image.load("/arcade/apps/system/settings/diagnostic/b_dn.bmp")
+    self.l_up_sprite = Image.load("/arcade/apps/system/device/diagnostic/l_up.bmp")
+    self.l_dn_sprite = Image.load("/arcade/apps/system/device/diagnostic/l_dn.bmp")
+    self.r_up_sprite = Image.load("/arcade/apps/system/device/diagnostic/r_up.bmp")
+    self.r_dn_sprite = Image.load("/arcade/apps/system/device/diagnostic/r_dn.bmp")
+    self.a_up_sprite = Image.load("/arcade/apps/system/device/diagnostic/a_up.bmp")
+    self.a_dn_sprite = Image.load("/arcade/apps/system/device/diagnostic/a_dn.bmp")
+    self.b_up_sprite = Image.load("/arcade/apps/system/device/diagnostic/b_up.bmp")
+    self.b_dn_sprite = Image.load("/arcade/apps/system/device/diagnostic/b_dn.bmp")
 
   def on_attach(self, c):
     c.fill(0)
@@ -29,15 +29,12 @@ class Diagnostic(Scene):
       self.hold_b  = 0
 
     if self.hold_b > 128:
-      from arcade.apps.system.settings import Settings
-      c.stage.play(Settings)
+      from arcade.apps.system.device import Device
+      c.stage.play(Device)
 
   def on_render(self, c):
     c.rect(0, 126,         128, 2, BLACK)
     c.rect(0, 126, self.hold_b, 2, WHITE)
-
-    c.rect(116, 0, 12, 10, WHITE)
-    c.text(BLACK_ON_WHITE, str(c.stage.m_fps), 116, 1)
 
     if c.is_button_down(Input.BUTTON_L):
       c.image(self.l_dn_sprite, 4, 52)

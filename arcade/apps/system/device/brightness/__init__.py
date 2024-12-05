@@ -46,5 +46,5 @@ class Brightness(Scene):
       self.frame = 0
       c.stage.screen.set_brightness(min( 1, c.stage.screen.get_brightness() + .05))
     elif button == Input.BUTTON_B:
-      from arcade.apps.system.settings import Settings
-      c.stage.play(Settings)
+      from arcade.apps.system.device import Device
+      c.stage.play(Device)

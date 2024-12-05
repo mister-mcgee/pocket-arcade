@@ -3,6 +3,7 @@ import time
 import supervisor
 
 from arcade.input   import Input
+from arcade.image   import Image
 from arcade.screen  import Screen
 from arcade.context import Context
 
@@ -55,9 +56,11 @@ class Stage:
     # Scene
     self.scene = None
 
+    self.home_sprite = Image.load("/arcade/home.bmp")
+
   def reload(self):
     self.screen.fill(0)
-    self.screen.text(WHITE_ON_BLACK, "Returning Home...", 13, 60)
+    self.screen.image(self.home_sprite, 56, 56)
     self.screen.blit( )
     supervisor.reload()
 

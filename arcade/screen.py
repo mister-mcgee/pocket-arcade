@@ -8,7 +8,7 @@ import digitalio
 import adafruit_rgb_display.st7735 as st7735
 
 class Screen(arcade.canvas.Canvas):
-  def __init__(self, stage): 
+  def __init__(self, stage=None): 
     super().__init__(129, 128)
 
     self.stage = stage

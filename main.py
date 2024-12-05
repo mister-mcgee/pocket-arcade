@@ -2,14 +2,17 @@ import supervisor
 import microcontroller
 
 from arcade.stage import Stage
+from arcade.image import Image
 from arcade.color import WHITE, BLACK
 from arcade.fonts import WHITE_ON_BLACK
+
+dev_sprite = Image.load("/arcade/dev.bmp")
 
 stage = Stage(debug=False)
 
 if   microcontroller.nvm[0:3] == b"dev" and     supervisor.runtime.usb_connected:
   stage.screen.fill(0)
-  stage.screen.text(WHITE_ON_BLACK, "Developer Mode...", 13, 60)
+  stage.screen.image(dev_sprite, 32, 48)
   stage.screen.blit( )
 elif microcontroller.nvm[0:3] == b"dev" and not supervisor.runtime.usb_connected:
   # mode mismatch, reset

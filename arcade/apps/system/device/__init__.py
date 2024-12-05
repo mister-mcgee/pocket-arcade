@@ -6,12 +6,12 @@ from arcade.color import WHITE
 from arcade.fonts import WHITE_ON_BLACK, BLACK_ON_WHITE
 
 from arcade.apps.system.loading             import Loading
-from arcade.apps.system.settings.brightness import Brightness
-from arcade.apps.system.settings.diagnostic import Diagnostic
+from arcade.apps.system.device.brightness import Brightness
+from arcade.apps.system.device.diagnostic import Diagnostic
 
-class Settings(Scene):
+class Device(Scene):
   def __init__(self):
-    self.version = f"v{Arcade.VERSION.major}.{Arcade.VERSION.minor}.{Arcade.VERSION.patch}"
+    self.version = f"{Arcade.VERSION.major}.{Arcade.VERSION.minor}.{Arcade.VERSION.patch}"
     self.options = [
       ("Brightness",         Brightness ),
       ("Diagnostic", Loading(Diagnostic)),
@@ -21,7 +21,7 @@ class Settings(Scene):
   def paint(self, c):
     c.fill(0)
     c.rect(0, 0, 128, 10, WHITE)
-    c.text(BLACK_ON_WHITE, "Settings", 40, 1)
+    c.text(BLACK_ON_WHITE, "Device", 46, 1)
 
     for i, (title, _) in enumerate(self.options):
       if i == self.option:
@@ -30,8 +30,14 @@ class Settings(Scene):
       else:
         c.text (WHITE_ON_BLACK, title, 1, i * 10 + 12)
 
+    c.text(WHITE_ON_BLACK, self.version, 0, 120)
+
   def on_attach(self, c):
     self.paint(c)
+
+  def on_render(self, c):
+    c.rect(116, 120, 12, 8, 0)
+    c.text(WHITE_ON_BLACK, c.stage.m_fps, 116, 120)
 
   def on_button_down(self, c, button):
     if   button == Input.BUTTON_L:

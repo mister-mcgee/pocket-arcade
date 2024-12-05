@@ -15,7 +15,7 @@ from arcade.apps.system.loading import Loading
 
 class Dashboard(Scene):
   def __init__(self):
-    self.version = str(Arcade.VERSION)
+    self.version = Arcade.VERSION.moniker
     self.options = [
       ("Pong"  , Pong ),
       ("Snake" , Snake),
@@ -48,8 +48,8 @@ class Dashboard(Scene):
       self.hold_b  = 0
 
     if self.hold_b > 128:
-      from arcade.apps.system.settings import Settings
-      c.stage.play(Settings)
+      from arcade.apps.system.device import Device
+      c.stage.play(Device)
 
   def on_render(self, c):
     c.rect(0, 126,         128, 2, BLACK)
