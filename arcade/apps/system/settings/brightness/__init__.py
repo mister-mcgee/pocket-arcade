@@ -7,6 +7,14 @@ class Brightness(Scene):
   def __init__(self):
     self.frame = 0
 
+  def on_detach(self, c):
+    brightness = c.stage.screen.get_brightness()
+    try:
+      with open("screen.cfg", "w+") as f:
+        f.write(str(brightness))
+    except:
+      pass
+
   def on_update(self, c):
     self.frame += 1
     if self.frame % 3 == 0:

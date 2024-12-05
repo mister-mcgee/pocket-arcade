@@ -30,8 +30,16 @@ class Screen(arcade.canvas.Canvas):
       dc       = digitalio.DigitalInOut(board.D12),
       rst      = digitalio.DigitalInOut(board.D11),
     )
+    
+    brightness = .25
+    # read brightness from file
+    try:
+      with open("screen.cfg", "r+") as f:
+        brightness = float(f.readline())
+    except:
+      pass
 
-    self.backlight = pwmio.PWMOut(board.D13, frequency=1000, duty_cycle=int(.25 * 65535))
+    self.backlight = pwmio.PWMOut(board.D13, frequency=1000, duty_cycle=int(brightness * 65535))
 
   def set_brightness(self, brightness):
     self.backlight.duty_cycle = round(brightness * 65535)

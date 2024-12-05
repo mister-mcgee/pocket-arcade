@@ -94,7 +94,7 @@ class Stage:
     else:
       self.hold_all  =    0
 
-    if self.hold_all > 1.5:
+    if self.hold_all > 1:
       self.reload()
 
     if self.scene:
