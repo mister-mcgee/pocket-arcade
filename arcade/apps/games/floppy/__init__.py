@@ -3,9 +3,10 @@ import random
 import math
 
 from arcade.image import Image
+from arcade.input import Input
 from arcade.scene import Scene
 
-from arcade.color import color, WHITE, BLACK
+from arcade.color import WHITE, BLACK
 from arcade.fonts import WHITE_ON_BLACK
 
 class Floppy(Scene):
@@ -13,8 +14,8 @@ class Floppy(Scene):
     def __init__(self):
       self.x  = 64
       self.y  = 64
-      self.vy = 0
-      self.ay = 1
+      self.vy = -5
+      self.ay =  1
 
   class Plug:
     def __init__(self, x=0, y=64, gap=80):
@@ -39,8 +40,7 @@ class Floppy(Scene):
   def __init__(self):
     self.disk_sprite = Image.load("/arcade/apps/games/floppy/disk.bmp")
     self.plug_sprite = Image.load("/arcade/apps/games/floppy/plug.bmp")
-    self.spark_color = WHITE #color(255, 213, 0)
-    self.bg = color(115, 198, 225)
+    self.bg = self.plug_sprite.buffer[0, 0]
 
   def on_attach(self, c):
     c.fill(self.bg)
@@ -54,16 +54,17 @@ class Floppy(Scene):
     )
 
   def reset(self):
+    self.hold_any = 0
     self.speed =  1
-    self.score =  100
+    self.score =  0
     self.frame =  0
     self.game_over = False
   
     self.disk = Floppy.Disk()
     self.plugs = [
-      Floppy.Plug( 96, self.random_height(80), 80),
-      Floppy.Plug(196, self.random_height(79), 79),
-      Floppy.Plug(296, self.random_height(78), 78),
+      Floppy.Plug(112, self.random_height(64), 64),
+      Floppy.Plug(212, self.random_height(63), 63),
+      Floppy.Plug(312, self.random_height(62), 62),
     ]
 
     self.sparks = [
@@ -98,7 +99,7 @@ class Floppy(Scene):
     c.image(self.disk_sprite, disk.x - 8, disk.y - 8)
 
   def draw_spark(self, c, spark):
-    c.rect(spark.x - 1, spark.y - 1, 2, 2, self.spark_color)
+    c.rect(spark.x - 1, spark.y - 1, 2, 2, WHITE)
 
   def spawn_spark(self, x, y):
     for spark in self.sparks:
@@ -123,6 +124,8 @@ class Floppy(Scene):
 
   def on_render(self, c):
     if self.game_over:
+      c.rect(0, 126,           128, 2, self.bg)
+      c.rect(0, 126, self.hold_any, 2,   WHITE)
       return
 
     # erase elements
@@ -138,7 +141,7 @@ class Floppy(Scene):
       if plug.x < -16:
         plug.x     += 300
         self.score +=   1
-        plug.set_gap(max(80 - self.score , 32))
+        plug.set_gap(max(64 - self.score , 32))
         plug.y = self.random_height( plug.gap )
       self.draw_plug(c, plug)
 
@@ -180,6 +183,22 @@ class Floppy(Scene):
       spark.y  += spark.vy
       spark.t  -= 1
       self.draw_spark(c, spark)
+
+  def on_update(self, c):
+    if self.game_over:
+      if (
+        c.is_button_down(Input.BUTTON_L) or
+        c.is_button_down(Input.BUTTON_R) or
+        c.is_button_down(Input.BUTTON_A) or
+        c.is_button_down(Input.BUTTON_B)
+      ):
+        self.hold_any += 8
+      else:
+        self.hold_any  = 0
+      
+      if self.hold_any >= 128:
+        c.fill(self.bg)
+        self.reset(   )
 
   def on_button_down(self, c, button):
     self.disk.vy = -6
