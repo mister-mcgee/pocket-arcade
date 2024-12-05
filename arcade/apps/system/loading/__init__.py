@@ -3,7 +3,7 @@ from arcade.scene import Scene
 
 from arcade.fonts import WHITE_ON_BLACK
 
-load_sprite = Image.load("/arcade/load.bmp")
+load_sprite = Image.load("/arcade/apps/system/load.bmp")
 
 def Loading(scene):
   class Loading(Scene):

@@ -56,7 +56,7 @@ class Stage:
     # Scene
     self.scene = None
 
-    self.home_sprite = Image.load("/arcade/home.bmp")
+    self.home_sprite = Image.load("/arcade/apps/system/home.bmp")
 
   def reload(self):
     self.screen.fill(0)
