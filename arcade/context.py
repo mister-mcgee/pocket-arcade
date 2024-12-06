@@ -21,14 +21,14 @@ class Context:
   def vline(self, x, y, h, c):
     self.stage.screen.vline(x, y, h, c)
 
-  def image(self, image, x=0, y=0, sx=0, sy=0, sw=None, sh=None):
-    self.stage.screen.image(image, x, y, sx, sy, sw, sh)
+  def image(self, image, x=0, y=0, sx=0, sy=0, sw=None, sh=None, *, a=None):
+    self.stage.screen.image(image, x, y, sx, sy, sw, sh, a=a)
 
-  def text(self, atlas, text, x=0, y=0):
-    self.stage.screen.text(atlas, text, x, y)
+  def text(self, atlas, text, x=0, y=0, *, a=None):
+    self.stage.screen.text(atlas, text, x, y, a=a)
 
-  def sprite(self, atlas, i=0, x=0, y=0):
-    self.stage.screen.sprite(atlas, i, x, y)
+  def sprite(self, atlas, i=0, x=0, y=0, *, a=None):
+    self.stage.screen.sprite(atlas, i, x, y, a=a)
 
   def is_button_up  (self, button):
     return self.stage.input.is_button_up  (button)

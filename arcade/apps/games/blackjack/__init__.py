@@ -1,14 +1,15 @@
 import random
 
+from arcade.fonts import WHITE_ON_BLACK
 from arcade.scene import Scene
 from arcade.image import Image
 from arcade.atlas import Atlas
 
 class Blackjack(Scene):
   def __init__(self):
-    self.card_sprite = Atlas(Image.load("/arcade/apps/blackjack/card.bmp"),  2, 1)
-    self.face_sprite = Atlas(Image.load("/arcade/apps/blackjack/face.bmp"), 13, 2)
-    self.suit_sprite = Atlas(Image.load("/arcade/apps/blackjack/suit.bmp"),  4, 1)
+    self.card_sprite = Atlas(Image.load("/arcade/apps/games/blackjack/card.bmp"),  2, 1)
+    self.face_sprite = Atlas(Image.load("/arcade/apps/games/blackjack/face.bmp"), 13, 2)
+    self.suit_sprite = Atlas(Image.load("/arcade/apps/games/blackjack/suit.bmp"),  4, 1)
 
     self.CLUBS    = 0x00
     self.HEARTS   = 0x01
@@ -89,6 +90,7 @@ class Blackjack(Scene):
   def draw_hand(self, c, hand, x, y, w=17):
     for i, card in enumerate(hand):
       self.draw_card(c, card, i * w + x, y)
+    c.text(WHITE_ON_BLACK, self.value_of(hand), x + w * len(hand), y)
 
   def hit(self, c):
     self.deal(self.deck, self.player)
