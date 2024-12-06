@@ -2,7 +2,7 @@ from arcade.scene import Scene
 from arcade.image import Image
 from arcade.input import Input
 from arcade.color import WHITE, BLACK
-from arcade.fonts import BLACK_ON_WHITE
+from arcade.fonts import BLACK_ON_WHITE, WHITE_ON_BLACK
 
 class Diagnostic(Scene):
   def __init__(self):

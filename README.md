@@ -37,9 +37,4 @@ Begin by downloading the contents of this repository and unzipping the archive.
 
 After [Updating the Boot Loader](#updating-the-boot-loader) and [Updating CircuitPython](#updating-circuitpython) the board should now appear as a special `CIRCUITPY` drive in your computer's file system. Delete all pre-existing files inside of `CIRCUITPY` and copy the unzipped contents of the repository into the top level directory.
 
-While plugged into a computer via USB, the Pocket Arcade will boot into `readonly` mode. This is indicated by a developer icon that appears during the boot sequence.
-
-`Readonly` mode disables write access in CircuitPython, but enables write access over USB.
-
-
-
+While plugged into a computer via USB, the Pocket Arcade will boot into `readonly` mode. This is indicated by a special icon that appears during the boot sequence. In `readonly` mode scripts scripts will be unable to write to the on-board file system, but you can still create, edit, or delete files on the board from your computer just like you would a typical drive.

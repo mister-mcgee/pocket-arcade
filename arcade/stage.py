@@ -12,8 +12,8 @@ from arcade.fonts import WHITE_ON_BLACK
 class Stage:
   def __init__(self, *, fps=24, debug=False):
     self.debug = debug
-
-    self.input   = Input  (self)
+    
+    self.input   = Input  (self)    
     self.screen  = Screen (self)
     self.context = Context(self)
 
@@ -56,6 +56,17 @@ class Stage:
     # Scene
     self.scene = None
 
+    self.screen_timer = 0
+    self.time_until_dim = 15
+    self.time_until_off = 30
+
+    self.screen_dim = False
+    self.screen_off = False
+
+    self.off_brightness =    0
+    self.dim_brightness = .025
+    self.pre_brightness = self.screen.get_brightness()
+
   def reload(self):
     self.screen.fill(0)
     self.screen.image(Image.load("/arcade/icons/home.bmp"), 56, 56)
@@ -85,6 +96,7 @@ class Stage:
 
   def update(self, c):
     self.input.poll(c)
+
     if (
       c.is_button_down(Input.BUTTON_L) and
       c.is_button_down(Input.BUTTON_R) and
@@ -100,6 +112,29 @@ class Stage:
 
     if self.scene:
       self.scene.on_update(c)
+
+    if (
+      c.is_button_down(Input.BUTTON_L) or
+      c.is_button_down(Input.BUTTON_R) or
+      c.is_button_down(Input.BUTTON_A) or
+      c.is_button_down(Input.BUTTON_B)
+    ):
+      if self.screen_dim or self.screen_off:
+        self.screen.set_brightness(self.pre_brightness)
+        self.screen_dim = False
+        self.screen_off = False
+      self.screen_timer = 0
+    else:
+      self.screen_timer += c.dt
+
+      if self.screen_timer > self.time_until_dim and not self.screen_dim:
+        self.pre_brightness = self.screen.get_brightness()
+        self.screen.set_brightness(self.dim_brightness)
+        self.screen_dim = True
+
+      if self.screen_timer > self.time_until_off and not self.screen_off:
+        self.screen.set_brightness(self.off_brightness)
+        self.screen_off = True
 
   def render(self, c):
     if self.scene:

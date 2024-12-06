@@ -6,17 +6,17 @@ from arcade.image import Image
 
 stage = Stage(debug=False)
 
-if   microcontroller.nvm[0:3] == b"dev" and     supervisor.runtime.usb_connected:
+if   microcontroller.nvm[0:3] == b"usb" and     supervisor.runtime.usb_connected:
   stage.screen.fill(0)
-  stage.screen.image(Image.load("/arcade/icons/dev.bmp"), 52, 52)
+  stage.screen.image(Image.load("/arcade/icons/usb.bmp"), 52, 52)
   stage.screen.blit( )
-elif microcontroller.nvm[0:3] == b"dev" and not supervisor.runtime.usb_connected:
+elif microcontroller.nvm[0:3] == b"usb" and not supervisor.runtime.usb_connected:
   # mode mismatch, reset
   microcontroller.nvm[0:3] = b"\0\0\0"
   microcontroller.reset()
-elif microcontroller.nvm[0:3] != b"dev" and     supervisor.runtime.usb_connected:
+elif microcontroller.nvm[0:3] != b"usb" and     supervisor.runtime.usb_connected:
   # mode mismatch, reset
-  microcontroller.nvm[0:3] = b"dev"
+  microcontroller.nvm[0:3] = b"usb"
   microcontroller.reset()
 
 from arcade.apps.system.dashboard import Dashboard
