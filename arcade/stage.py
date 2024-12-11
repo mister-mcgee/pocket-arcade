@@ -68,9 +68,12 @@ class Stage:
     self.pre_brightness = self.screen.get_brightness()
 
   def reload(self):
+    self.play(None)
+      
     self.screen.fill(0)
     self.screen.image(Image.load("/arcade/icons/home.bmp"), 56, 56)
     self.screen.blit( )
+
     supervisor.reload()
 
   def used_kb(self):
@@ -86,10 +89,11 @@ class Stage:
     if self.scene:
       self.scene.on_detach(self.context)
 
-    self.scene =    None
+    self.scene = None
     gc.collect()
-    self.scene = scene()
-    self.input . reset()
+    if scene:
+      self.scene = scene()
+      self.input . reset()
 
     if self.scene:
       self.scene.on_attach(self.context)

@@ -19,7 +19,7 @@ class Chess(Scene):
 
     self.ON_WHITE = 0b00000
     self.ON_BLACK = 0b01000
-    self.chess_sprite = Image.load("/arcade/apps/chess/chess.bmp")
+    self.chess_sprite = Image.load("/arcade/apps/games/chess/chess.bmp")
 
     self.board = np.zeros((8, 8), dtype=np.uint8)
 
