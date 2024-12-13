@@ -15,7 +15,7 @@ from arcade.apps.system.loading import Loading
 
 class Dashboard(Scene):
   def __init__(self):
-    self.version = Arcade.VERSION.moniker
+    self.version = "Home" #Arcade.VERSION.moniker
     self.options = [
       ("Pong"  , Pong ),
       ("Snake" , Snake),

@@ -5,7 +5,7 @@ from arcade.scene import Scene
 from arcade.color import WHITE
 from arcade.fonts import WHITE_ON_BLACK, BLACK_ON_WHITE
 
-from arcade.apps.system.loading             import Loading
+from arcade.apps.system.loading           import Loading
 from arcade.apps.system.device.brightness import Brightness
 from arcade.apps.system.device.diagnostic import Diagnostic
 

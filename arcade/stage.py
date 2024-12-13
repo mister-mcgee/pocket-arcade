@@ -56,9 +56,9 @@ class Stage:
     # Scene
     self.scene = None
 
-    self.screen_timer = 0
-    self.time_until_dim = 30
-    self.time_until_off = 60
+    self.screen_timer   =   0
+    self.time_until_dim =  30
+    self.time_until_off = 120
 
     self.screen_dim = False
     self.screen_off = False
